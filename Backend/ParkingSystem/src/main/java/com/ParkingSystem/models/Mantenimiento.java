@@ -23,6 +23,8 @@ public class Mantenimiento {
 
     //id, parqueadero(Parqueadero), tipo(tipo mantenimiento: preventivo, correctivo, predictivo, inspeccion, emergencia), descripcion, fecha programada, fecha inicio, fecha fin, estado(programado, en progreso, completado, cancelado), costo, proveedor
 
+    @id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Parqueadero parqueadero;
     private TipoMantenimiento tipo;

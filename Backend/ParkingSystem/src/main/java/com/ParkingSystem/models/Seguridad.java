@@ -1,6 +1,9 @@
 package com.ParkingSystem.models;
 import java.time.LocalDate;
 
+@Entity
+@table(name = "seguridad")
+
 public class Seguridad {
     
     public enum TipoSeguridad {
@@ -19,6 +22,8 @@ public class Seguridad {
 
     //id, parqueadero(Parqueadero), tipo(tipo seguridad: incidente, alerta, novedad, emergencia), descripcion, fecha creacion, gravedad(baja, media, alta, critica), resuelto, fecha resolucion
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Parqueadero parqueadero;
     private TipoSeguridad tipo;

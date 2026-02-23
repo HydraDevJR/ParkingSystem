@@ -1,8 +1,15 @@
 package com.ParkingSystem.models;
 
+import java.lang.annotation.Inherited;
+
+@Entity
+@table(name = "parqueadero")
+
 public class Parqueadero {
     //id, nombre, tipo, uso, direccion, pisos, propietario, administrador, activo
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private integer id;
     private String nombre;
     private String tipo;

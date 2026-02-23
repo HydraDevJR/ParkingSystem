@@ -2,6 +2,9 @@ package com.ParkingSystem.models;
 
 import java.time.LocalDate;
 
+@Entity
+@table(name = "pago")
+
 public class Pago {
     
     public enum MetodoPago {
@@ -18,6 +21,9 @@ public class Pago {
     }
     
     //id, factura(Factura), monto, fecha de pago, metodo de pago(efectivo, tarjeta credito, tarjeta debito, qr), estado(pendiente, completado, fallido), referencia de pago
+
+    @id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private int id;
     private Factura factura;
     private double monto;
