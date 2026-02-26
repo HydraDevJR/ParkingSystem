@@ -8,5 +8,5 @@ public class Reserva {
         Finalizada
     }
 
-    //id, celda(Celda), usuario(Usuario), fecha inicio, fecha fin, limite de tiempo, fecha de creacion, fecha de cancelacion, estado(activa, cancelada, finalizada)
+    //id, celda(Celda) una celda pertenece a una reserva, usuario(Un usuario tinene muchas reservas pertenecen a un usuario), fecha inicio, fecha fin, limite de tiempo, fecha de creacion, fecha de cancelacion, estado(activa, cancelada, finalizada)
 }
