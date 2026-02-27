@@ -1,6 +1,12 @@
 # ParkingSystem
 Proyecto académico - Sistema de parqueadero
 
+### Integrantes 
+- **Jorge Rodriguez**
+- **Diego Clavijo Ballesteros**
+- **Juan Manuel Pineda**
+- **Juan Felipe Martinez**
+
 ## Descripción 
 Este repositorio contiene un sistema de parqueo completo diseñado para gestionar reservas, cobros, control de accesos y mantenimiento de un parqueadero. Está dividido en un backend Java (Spring Boot) y un frontend moderno con Vite y React.
 
@@ -9,5 +15,7 @@ Este repositorio contiene un sistema de parqueo completo diseñado para gestiona
 2. Cada tarea debe tener su propia rama feature/nombre-tarea.
 3. Toda fusión debe pasar por un Pull Request y ser aprobada por al menos un compañero.
 4. Mensajes de commit claros (ej: feat: agregar validación de formulario).
+
+
 
 
