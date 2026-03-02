@@ -1,13 +1,24 @@
 package com.ParkingSystem.models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,19 +36,42 @@ public class Cuenta {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
-    private String usuario;
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
+    @Column(nullable = false, unique = true)
     private String username;
-    private String contraseña;
-    private String ultimoAcceso;
-    private LocalDate fechaCreacion;
-    private LocalDate fechaModificacion;
-    private Boolean activo;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(name = "ultimo_acceso")
+    private LocalDateTime ultimoAcceso;
+
+    @CreationTimestamp
+    @Column(name = "fecha_creacion",nullable = false, updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    @UpdateTimestamp
+    @Column(name = "fecha_modificacion")
+    private LocalDateTime fechaModificacion;
+
+    @Column(nullable = false)
+    private Boolean activo = true;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_cuenta", nullable = false)
     private TipoCuenta tipo;
 
-    public Cuenta(String usuario, String username, String contraseña, String ultimoAcceso, LocalDate fechaCreacion, LocalDate fechaModificacion, Boolean activo, TipoCuenta tipo) {
+    @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<CuentaRol> cuentaRoles = new ArrayList<>();
+
+    public Cuenta(Usuario usuario, String username, String password, LocalDateTime ultimoAcceso, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, Boolean activo, TipoCuenta tipo) {
         this.usuario = usuario;
         this.username = username;
-        this.contraseña = contraseña;
+        this.password = password;
         this.ultimoAcceso = ultimoAcceso;
         this.fechaCreacion = fechaCreacion;
         this.fechaModificacion = fechaModificacion;
@@ -55,11 +89,11 @@ public class Cuenta {
         this.id = id;
     }
 
-    public String getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -71,35 +105,35 @@ public class Cuenta {
         this.username = username;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUltimoAcceso() {
+    public LocalDateTime getUltimoAcceso() {
         return ultimoAcceso;
     }
 
-    public void setUltimoAcceso(String ultimoAcceso) {
+    public void setUltimoAcceso(LocalDateTime ultimoAcceso) {
         this.ultimoAcceso = ultimoAcceso;
     }
 
-    public LocalDate getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDate fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDate getFechaModificacion() {
+    public LocalDateTime getFechaModificacion() {
         return fechaModificacion;
     }
 
-    public void setFechaModificacion(LocalDate fechaModificacion) {
+    public void setFechaModificacion(LocalDateTime fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
 

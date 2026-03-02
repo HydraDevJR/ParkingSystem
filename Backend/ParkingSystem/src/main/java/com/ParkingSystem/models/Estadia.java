@@ -1,13 +1,21 @@
 package com.ParkingSystem.models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,16 +33,38 @@ public class Estadia {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "vehiculo_id", nullable = false)
     private Vehiculo vehiculo;
+
+    @ManyToOne
+    @JoinColumn(name = "celda_id", nullable = false)
     private Celda celda;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
-    private LocalDate fechaCreacion;
-    private LocalDate fechaModificacion;
+
+    @Column(name = "fecha_inicio", nullable = false)
+    private LocalDateTime fechaInicio;
+
+    @Column(name = "fecha_fin", nullable = true)
+    private LocalDateTime fechaFin;
+
+    @CreationTimestamp
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    @UpdateTimestamp
+    @Column(name = "fecha_modificacion")
+    private LocalDateTime fechaModificacion;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private EstadoEstadia estado;
+
+    @OneToOne
+    @JoinColumn(name = "reserva_id", unique = true)
     private Reserva reserva;
     
-    public Estadia(Vehiculo vehiculo, Celda celda, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaCreacion, LocalDate fechaModificacion, EstadoEstadia estado, Reserva reserva) {
+    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, EstadoEstadia estado, Reserva reserva) {
         this.vehiculo = vehiculo;
         this.celda = celda;
         this.fechaInicio = fechaInicio;
@@ -71,35 +101,35 @@ public class Estadia {
         this.celda = celda;
     }
 
-    public LocalDate getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public void setFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
+    public void setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public LocalDate getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDate fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDate getFechaModificacion() {
+    public LocalDateTime getFechaModificacion() {
         return fechaModificacion;
     }
 
-    public void setFechaModificacion(LocalDate fechaModificacion) {
+    public void setFechaModificacion(LocalDateTime fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
 
