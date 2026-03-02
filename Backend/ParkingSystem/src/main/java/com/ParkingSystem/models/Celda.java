@@ -1,9 +1,14 @@
 package com.ParkingSystem.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,10 +24,23 @@ public class Celda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
     private Integer numero;
+
+    @Column(nullable = false)
     private Integer piso;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_vehiculo_id", nullable = false)
     private TipoVehiculo tipo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private EstadoCelda estado;
+
+    @ManyToOne
+    @JoinColumn(name = "parqueadero_id", nullable = false)
     private Parqueadero parqueadero;
 
     public Celda(Integer id, Integer numero, Integer piso, TipoVehiculo tipo, EstadoCelda estado, Parqueadero parqueadero) {
