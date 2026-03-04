@@ -1,16 +1,17 @@
-# React + Vite
+# Frontend - Sistema de Parqueadero
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositorio contiene la interfaz de usuario para el sistema de gestión de parqueaderos. Está desarrollada con **React** y **Vite**, y se conecta con un backend en **Spring Boot** para manejar la autenticación, reservas, tickets y facturación.
 
-Currently, two official plugins are available:
+## Stack Tecnológico
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework:** [React](https://es.react.dev/)
+- **Herramienta de Build y Servidor de Desarrollo:** [Vite](https://vitejs.dev/)
+- **Linting:** [ESLint](https://eslint.org/) (configuración en `eslint.config.js`)
 
-## React Compiler
+## Requisitos Previos
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+Asegúrate de tener instalado lo siguiente en tu máquina:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Node.js:** Versión **16** o superior, pero **menor a 21** (se recomienda usar la versión 18 o 20 para mayor estabilidad).
+- **Gestor de paquetes:** `npm`, `yarn` o `pnpm`.
+- **Backend:** El servidor de backend (Spring Boot) debe estar en ejecución, por defecto en `http://localhost:8080`.
