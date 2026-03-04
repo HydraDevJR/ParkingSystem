@@ -52,3 +52,11 @@ Sigue estos pasos para levantar el proyecto en tu entorno local:
     ```
 
     La aplicación estará disponible típicamente en `http://localhost:5173`.
+
+
+## Autores
+
+    º Jorge Rodriguez -> HydraDevJR
+    º Diego Clavijo -> dj107-il
+    º Juan Pineda - > pinedajuanmanuel706-coder
+    º Felipe Martinez -> pipejaramillo913-del
