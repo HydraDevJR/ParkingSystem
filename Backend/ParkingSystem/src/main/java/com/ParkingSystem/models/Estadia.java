@@ -35,11 +35,11 @@ public class Estadia {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "vehiculo_id", nullable = false)
+    @JoinColumn(name = "fk_vehiculo", referencedColumnName = "id", nullable = false)
     private Vehiculo vehiculo;
 
     @ManyToOne
-    @JoinColumn(name = "celda_id", nullable = false)
+    @JoinColumn(name = "fk_celda", referencedColumnName = "id", nullable = false)
     private Celda celda;
 
     @Column(name = "fecha_inicio", nullable = false, updatable = false)
@@ -61,7 +61,7 @@ public class Estadia {
     private EstadoEstadia estado;
 
     @OneToOne
-    @JoinColumn(name = "reserva_id", unique = true)
+    @JoinColumn(name = "fk_reserva", referencedColumnName = "id", unique = true)
     private Reserva reserva;
     
     public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, EstadoEstadia estado, Reserva reserva) {

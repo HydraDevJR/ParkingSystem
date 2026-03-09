@@ -22,11 +22,11 @@ public class CuentaRol {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "cuenta_id", nullable = false)
+    @JoinColumn(name = "fk_cuenta", referencedColumnName = "id", nullable = false)
     private Cuenta cuenta;
 
     @ManyToOne
-    @JoinColumn(name = "rol_id", nullable = false)
+    @JoinColumn(name = "fk_rol", referencedColumnName = "id", nullable = false)
     private Rol rol;
 
     public CuentaRol(Cuenta cuenta, Rol rol) {
