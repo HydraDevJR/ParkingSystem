@@ -38,13 +38,13 @@ public class Cuenta {
     private UUID id;
 
     @OneToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id", nullable = false)
     private Usuario usuario;
 
-    @Column(name = "nombre_usuario", nullable = false, unique = true)
+    @Column(name = "nombre_usuario", nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(name = "contrasena", nullable = false)
+    @Column(name = "contrasena", nullable = false, length = 100)
     private String password;
 
     @Column(name = "ultimo_acceso", nullable = false)

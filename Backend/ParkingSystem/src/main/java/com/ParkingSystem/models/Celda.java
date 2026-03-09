@@ -35,7 +35,7 @@ public class Celda {
     private Integer piso;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_vehiculo_id", nullable = false)
+    @JoinColumn(name = "fk_tipo_vehiculo", referencedColumnName = "id", nullable = false)
     private TipoVehiculo tipo;
 
     @Enumerated(EnumType.STRING)
@@ -43,7 +43,7 @@ public class Celda {
     private EstadoCelda estado;
 
     @ManyToOne
-    @JoinColumn(name = "parqueadero_id", nullable = false)
+    @JoinColumn(name = "fk_parqueadero", referencedColumnName = "id", nullable = false)
     private Parqueadero parqueadero;
 
     public Celda(UUID id, Integer numero, Integer piso, TipoVehiculo tipo, EstadoCelda estado, Parqueadero parqueadero) {

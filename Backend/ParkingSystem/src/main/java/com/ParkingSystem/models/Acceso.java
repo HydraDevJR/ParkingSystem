@@ -37,11 +37,11 @@ public class Acceso {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "parqueadero_id", updatable = false, nullable = false)
+    @JoinColumn(name = "fk_parqueadero", referencedColumnName = "id", updatable = false, nullable = false)
     private Parqueadero parqueadero;
 
     @ManyToOne
-    @JoinColumn(name = "vehiculo_id", updatable = false, nullable = false)
+    @JoinColumn(name = "fk_vehiculo", referencedColumnName = "id", updatable = false, nullable = false)
     private Vehiculo vehiculo;
 
     @Enumerated(EnumType.STRING)
