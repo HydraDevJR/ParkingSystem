@@ -1,5 +1,7 @@
 package com.ParkingSystem.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,9 +17,9 @@ public class CuentaRol {
     
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(updatable = false, nullable = false, unique = true)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "cuenta_id", nullable = false)
@@ -34,11 +36,11 @@ public class CuentaRol {
 
     public CuentaRol() {}
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

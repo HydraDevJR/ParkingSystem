@@ -1,6 +1,6 @@
 package com.ParkingSystem.models;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -13,8 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "accesos")
@@ -35,39 +33,35 @@ public class Acceso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false, unique = true)
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "parqueadero_id", nullable = false)
+    @JoinColumn(name = "parqueadero_id", updatable = false, nullable = false)
     private Parqueadero parqueadero;
 
     @ManyToOne
-    @JoinColumn(name = "vehiculo_id", nullable = false)
+    @JoinColumn(name = "vehiculo_id", updatable = false, nullable = false)
     private Vehiculo vehiculo;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "tipo_acceso",nullable = false)
     private TipoAcceso tipo;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "metodo_acceso",nullable = false)
     private MetodoAcceso metodo;
 
-    @Column(nullable = false)
-    private LocalDate fecha;
+    @Column(name = "fecha",nullable = false)
+    private LocalDateTime fecha;
 
-    @Column(nullable = false)
-    private LocalTime hora;
-
-    public Acceso(UUID id, Parqueadero parqueadero, Vehiculo vehiculo, TipoAcceso tipo, MetodoAcceso metodo, LocalDate fecha, LocalTime hora) {
+    public Acceso(UUID id, Parqueadero parqueadero, Vehiculo vehiculo, TipoAcceso tipo, MetodoAcceso metodo, LocalDateTime fecha) {
         this.id = id;
         this.parqueadero = parqueadero;
         this.vehiculo = vehiculo;
         this.tipo = tipo;
         this.metodo = metodo;
         this.fecha = fecha;
-        this.hora = hora;
     }
 
     public Acceso() {}
@@ -112,19 +106,11 @@ public class Acceso {
         this.metodo = metodo;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
-    }
-
-    public LocalTime getHora() {
-        return hora;
-    }
-
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
     }
 }

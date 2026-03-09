@@ -31,7 +31,7 @@ public class Estadia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
 
     @ManyToOne
@@ -42,10 +42,10 @@ public class Estadia {
     @JoinColumn(name = "celda_id", nullable = false)
     private Celda celda;
 
-    @Column(name = "fecha_inicio", nullable = false)
+    @Column(name = "fecha_inicio", nullable = false, updatable = false)
     private LocalDateTime fechaInicio;
 
-    @Column(name = "fecha_fin", nullable = true)
+    @Column(name = "fecha_fin", nullable = true, updatable = false)
     private LocalDateTime fechaFin;
 
     @CreationTimestamp

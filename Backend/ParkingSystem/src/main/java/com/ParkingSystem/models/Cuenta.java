@@ -34,20 +34,20 @@ public class Cuenta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false, unique = true)
     private UUID id;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "nombre_usuario", nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @Column(name = "contrasena", nullable = false)
     private String password;
 
-    @Column(name = "ultimo_acceso")
+    @Column(name = "ultimo_acceso", nullable = false)
     private LocalDateTime ultimoAcceso;
 
     @CreationTimestamp
@@ -58,7 +58,7 @@ public class Cuenta {
     @Column(name = "fecha_modificacion")
     private LocalDateTime fechaModificacion;
 
-    @Column(nullable = false)
+    @Column(name = "cuenta_activa", nullable = false)
     private Boolean activo = true;
 
     @Enumerated(EnumType.STRING)
