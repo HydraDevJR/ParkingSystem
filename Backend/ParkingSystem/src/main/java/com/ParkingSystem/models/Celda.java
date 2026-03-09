@@ -1,5 +1,7 @@
 package com.ParkingSystem.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,13 +24,14 @@ public class Celda {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(updatable = false, nullable = false, unique = true)
+    private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "numero_celda", nullable = false, unique = true)
     private Integer numero;
 
-    @Column(nullable = false)
+    @Column(name = "numero_piso", nullable = false)
     private Integer piso;
 
     @ManyToOne
@@ -36,14 +39,14 @@ public class Celda {
     private TipoVehiculo tipo;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "estado_celda", nullable = false)
     private EstadoCelda estado;
 
     @ManyToOne
     @JoinColumn(name = "parqueadero_id", nullable = false)
     private Parqueadero parqueadero;
 
-    public Celda(Integer id, Integer numero, Integer piso, TipoVehiculo tipo, EstadoCelda estado, Parqueadero parqueadero) {
+    public Celda(UUID id, Integer numero, Integer piso, TipoVehiculo tipo, EstadoCelda estado, Parqueadero parqueadero) {
         this.id = id;
         this.numero = numero;
         this.piso = piso;
@@ -54,11 +57,11 @@ public class Celda {
 
     public Celda() {}
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
