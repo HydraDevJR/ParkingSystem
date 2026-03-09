@@ -25,13 +25,26 @@ public class Seguridad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Parqueadero parqueadero;
+
     private TipoSeguridad tipo;
+
+    @column(name = "descripcion", nullable = false, unique = false, length = 250)
     private String descripcion;
+
+    @column(name = "fecha_creacion", nullable = false, unique = false)
     private LocalDate fecha_creacion;
+
     private TipoGravedad gravedad;
+
+    @column(name = "resuelto", nullable = false, unique = false)
     private boolean resuelto;
+
+    @column(name = "fecha_resolucion", nullable = false, unique = false)
     private LocalDate fecha_resolucion;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_parqueadero", referencedColumnName = "id")
+    private Parqueadero parqueadero;
 
     public Seguridad(int id, Parqueadero parqueadero, TipoSeguridad tipo, String descripcion, LocalDate fecha_creacion, TipoGravedad gravedad, boolean resuelto, LocalDate fecha_resolucion){
         this.id = id;
