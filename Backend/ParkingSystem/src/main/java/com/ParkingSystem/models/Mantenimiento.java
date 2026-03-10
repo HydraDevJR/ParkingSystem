@@ -26,15 +26,32 @@ public class Mantenimiento {
     @id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Parqueadero parqueadero;
+
     private TipoMantenimiento tipo;
+
+    @column(name = "descripcion", nullable = false, unique = false, length = 255)
     private String descripcion;
+
+    @column(name = "fecha_programada", nullable = false, unique = false)
     private LocalDate fecha_programada;
+
+    @column(name = "fecha_inicio", nullable = true, unique = false)
     private LocalDate fecha_inicio;
+
+    @column(name = "fecha_fin", nullable = true, unique = false)
     private LocalDate fecha_fin;
+
     private EstadoMantenimiento estado;
+
+    @column(name = "costo", nullable = false, unique = false)
     private double costo;
+    
+    @column(name = "proveedor", nullable = false, unique = false, length = 100)
     private String proveedor;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_parqueadero", referencedColumnName = "id")
+    private Parqueadero parqueadero;
 
     public Mantenimiento(int id, Parqueadero parqueadero, TipoMantenimiento tipo, String descripcion, LocalDate fecha_programada, LocalDate fecha_inicio, LocalDate fecha_fin, EstadoMantenimiento estado, double costo, String proveedor){
         this.id = id;

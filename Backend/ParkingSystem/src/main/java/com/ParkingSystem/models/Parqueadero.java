@@ -11,14 +11,33 @@ public class Parqueadero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private integer id;
+
+    @column(name = "nombre", nullable = false, unique = false, length = 50)
     private String nombre;
+
+    @column(name = "tipo", nullable = false, unique = false, length = 50)
     private String tipo;
+
+    @column(name = "uso", nullable = false, unique = false)
     private integer uso;
+
+    @column(name = "direccion", nullable = false, unique = false, length = 250)
     private String direccion;
+
+    @column(name = "pisos", nullable = false, unique = false)
     private integer pisos;
+
+    @column(name = "propietario", nullable = false, unique = false, length = 100) 
     private String propietario;
+
+    @column(name = "administrador", nullable = false, unique = false, length = 100)
     private String administrador;
+
+    @column(name = "activo", nullable = false, unique = false)
     private boolean activo;
+
+    @OneToMany(mappedBy = "parqueadero")
+    private List<Mantenimiento> mantenimiento;
 
     public Parqueadero(integer id, String nombre, String tipo, integer uso, String direccion, integer pisos, String propietario, String administrador, boolean activo){
         this.id = id;
