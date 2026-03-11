@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react'  //Diego
+import './Header.css'
 
 const Header = () => (
 	<header className="app-header">
