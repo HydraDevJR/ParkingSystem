@@ -1,8 +1,8 @@
 import React from 'react'
-import Header from './Header'
-import SideBar from './SideBar'
-import Main from './Main'
-import Footer from './Footer'
+import Header from './header/Header'
+import SideBar from './side-bar/SideBar'
+import Main from './main/Main'
+import Footer from './footer/Footer'
 
 const Layout = ({ children }) => (
 	<div className="layout">

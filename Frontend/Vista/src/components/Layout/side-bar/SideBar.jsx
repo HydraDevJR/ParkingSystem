@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react'   //Jorge
+import './SideBar.css'
 
 const SideBar = () => (
 	<aside className="app-sidebar">
