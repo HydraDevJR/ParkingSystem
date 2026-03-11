@@ -1,8 +1,8 @@
 package com.ParkingSystem.models;
 
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column; 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +17,8 @@ public class TipoVehiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
     @OneToMany(mappedBy = "tipo", cascade = CascadeType.ALL)
