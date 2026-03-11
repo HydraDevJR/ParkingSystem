@@ -46,6 +46,8 @@ public class Celda {
     @JoinColumn(name = "fk_parqueadero", referencedColumnName = "id", nullable = false)
     private Parqueadero parqueadero;
 
+    // relacion con reserva
+
     public Celda(UUID id, Integer numero, Integer piso, TipoVehiculo tipo, EstadoCelda estado, Parqueadero parqueadero) {
         this.id = id;
         this.numero = numero;

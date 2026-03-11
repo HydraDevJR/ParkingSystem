@@ -1,6 +1,9 @@
 package com.ParkingSystem.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,104 +19,38 @@ public class Vehiculo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "placa", nullable = false, unique = true, length = 20)
     private String placa;
+
+    @Column(name = "marca", nullable = false, unique = false, length = 50)
     private String marca;
+
+    @Column(name = "modelo", nullable = false, unique = false, length = 50)
     private String modelo;
+
+    @Column(name = "color", nullable = false, unique = false, length = 20)
     private String color;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_vehiculo_id")
+       
+    @Column(name = "tipo_vehiculo", nullable = false, unique = false)
     private TipoVehiculo tipoVehiculo;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TipoVehiculoE", nullable = false, unique = false )
+
+
     @ManyToOne
-    @JoinColumn(name = "id_usuario") 
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id")
     private Usuario propietario;
 
     
     public Vehiculo() {
+        
     }
 
 
-    public Vehiculo(Integer id, String placa, String marca, String modelo, String color, TipoVehiculo tipoVehiculo,
-            Usuario propietario) {
-        this.id = id;
-        this.placa = placa;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.color = color;
-        this.tipoVehiculo = tipoVehiculo;
-        this.propietario = propietario;
-    }
+    
 
-
-    public Integer getId() {
-        return id;
-    }
-
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-
-    public String getPlaca() {
-        return placa;
-    }
-
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-
-    public String getMarca() {
-        return marca;
-    }
-
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-
-    public String getModelo() {
-        return modelo;
-    }
-
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-
-    public String getColor() {
-        return color;
-    }
-
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-
-    public TipoVehiculo getTipoVehiculo() {
-        return tipoVehiculo;
-    }
-
-
-    public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
-    }
-
-
-    public Usuario getPropietario() {
-        return propietario;
-    }
-
-
-    public void setPropietario(Usuario propietario) {
-        this.propietario = propietario;
-    }
 
  
     
