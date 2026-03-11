@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from './header/Header'
 import SideBar from './side-bar/SideBar'
-import Main from './main/Main'
+import Main from './main-layout/MainLayout'
 import Footer from './footer/Footer'
 
 const Layout = ({ children }) => (
