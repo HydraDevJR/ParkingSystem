@@ -11,7 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "celdas")
@@ -46,15 +48,19 @@ public class Celda {
     @JoinColumn(name = "fk_parqueadero", referencedColumnName = "id", nullable = false)
     private Parqueadero parqueadero;
 
+    @OneToMany(mappedBy = "celda")
+    private List<Estadia> estadias;
+
     // relacion con reserva
 
-    public Celda(UUID id, Integer numero, Integer piso, TipoVehiculo tipo, EstadoCelda estado, Parqueadero parqueadero) {
+    public Celda(UUID id, Integer numero, Integer piso, TipoVehiculo tipo, EstadoCelda estado, Parqueadero parqueadero, List<Estadia> estadias) {
         this.id = id;
         this.numero = numero;
         this.piso = piso;
         this.tipo = tipo;
         this.estado = estado;
         this.parqueadero = parqueadero;
+        this.estadias = estadias;
     }
 
     public Celda() {}
@@ -105,6 +111,14 @@ public class Celda {
 
     public void setParqueadero(Parqueadero parqueadero) {
         this.parqueadero = parqueadero;
+    }
+
+    public List<Estadia> getEstadias() {
+        return estadias;
+    }
+
+    public void setEstadias(List<Estadia> estadias) {
+        this.estadias = estadias;
     }
 
 }
