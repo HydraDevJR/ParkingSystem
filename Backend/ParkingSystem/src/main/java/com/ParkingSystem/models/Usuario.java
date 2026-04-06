@@ -13,7 +13,8 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.ParkingSystem.models.utils.TipoCedula; 
+import com.ParkingSystem.models.utils.TipoDocumento;
+import com.ParkingSystem.models.utils.TipoUsuario; 
 
 @Entity
 @Table(name = "usuarios")
@@ -23,11 +24,8 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "cedula", nullable = false, unique = true)
-    private String aprovechamiento; 
-
-    @Column(name = "cedula", nullable = false, unique = true)
-    private String cedula;
+    @Column(name = "documento", nullable = false, unique = true)
+    private String documento; 
 
     @Column(name = "nombre", nullable = false, unique = false, length = 50)
     private String nombre;
@@ -37,7 +35,10 @@ public class Usuario {
 
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
-    
+
+    @Column(name = "password", nullable = false, unique = false, length = 255)
+    private String password;
+
     @Column(name = "telefono", nullable = false, unique = false, length = 20)
     private String telefono;
 
@@ -48,33 +49,19 @@ public class Usuario {
     private String genero;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_cedula", nullable = false, unique = false, length = 20)
-    private TipoCedula tipoCedula;
+    @Column(name = "tipo_documento", nullable = false, unique = false, length = 20)
+    private TipoDocumento tipoDocumento;
 
-    @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_usuario", nullable = false, unique = false)
+    private TipoUsuario tipoUsuario;
+
+    // Relación 1 a Muchos con Vehículo
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Vehiculo> vehiculos;
 
-    
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Reserva> reservas;
 
-    public Usuario() {
-    }
-
-    public Usuario(Integer id, String cedula, String nombre, String apellido, String email, String telefono,
-            LocalDate fechaNacimiento, String genero, TipoCedula tipoCedula, List<Vehiculo> vehiculos, List<Reserva> reservas) {
-        this.id = id;
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
-        this.genero = genero;
-        this.tipoCedula = tipoCedula;
-        this.vehiculos = vehiculos;
-        this.reservas = reservas; 
-    }
+    public Usuario() {}
 
     public Integer getId() {
         return id;
@@ -84,12 +71,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getCedula() {
-        return cedula;
+    public String getDocumento() {
+        return documento;
     }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
 
     public String getNombre() {
@@ -116,6 +103,14 @@ public class Usuario {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -140,12 +135,20 @@ public class Usuario {
         this.genero = genero;
     }
 
-    public TipoCedula getTipoCedula() {
-        return tipoCedula;
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
     }
 
-    public void setTipoCedula(TipoCedula tipoCedula) {
-        this.tipoCedula = tipoCedula;
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     public List<Vehiculo> getVehiculos() {
@@ -156,11 +159,6 @@ public class Usuario {
         this.vehiculos = vehiculos;
     }
 
-    public List<Reserva> getReservas() {
-        return reservas;
-    }
+    
 
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
-    }
 }
