@@ -2,6 +2,7 @@ package com.ParkingSystem.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "facturas")
@@ -40,10 +41,15 @@ public class Factura {
     @JoinColumn(name = "tarifa_id")
     private Tarifa tarifa;
 
+    
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    private List<Pago> pagos;
+
     public Factura() {
     }
 
-    public Factura(Long id, int estadia, TipoFactura tipo, LocalDateTime fechaEmision, EstadoFactura estado, Tarifa tarifa) {
+    public Factura(Long id, int estadia, TipoFactura tipo, LocalDateTime fechaEmision,
+                   EstadoFactura estado, Tarifa tarifa) {
         this.id = id;
         this.estadia = estadia;
         this.tipo = tipo;
@@ -98,5 +104,13 @@ public class Factura {
 
     public void setTarifa(Tarifa tarifa) {
         this.tarifa = tarifa;
+    }
+
+    public List<Pago> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(List<Pago> pagos) {
+        this.pagos = pagos;
     }
 }

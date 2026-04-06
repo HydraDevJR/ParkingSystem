@@ -25,12 +25,22 @@ public class Pago {
     @id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private int id;
-    private Factura factura;
+
+    @column(name = "monto", nullable = false, unique = false)
     private double monto;
+
+    @column(name = "fecha_pago", nullable = false, unique = false)
     private LocalDate fecha_pago;
+
     private MetodoPago metodo_pago;
     private EstadoPago estado_pago;
+
+    @column(name = "referencia_pago", nullable = false, unique = false, length = 60)
     private String referencia_pago;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_factura", referencedColumnName = "id")
+    private Factura factura;
 
     public Pago(int id, Factura factura, double monto, LocalDate fecha_pago, MetodoPago metodo_pago, EstadoPago estado_pago, String referencia_pago){
         this.id = id;
