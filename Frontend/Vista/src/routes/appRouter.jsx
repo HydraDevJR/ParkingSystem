@@ -7,11 +7,7 @@ export let router = [ // Rutas para pages
         element: <App />
     },
     {
-        path: "",
-        element: 
-    },
-    {
-        path: "",
-        element:
+        path: "/Frontend/Vista/src/App.jsx",
+        element: <App />
     }
 ]
