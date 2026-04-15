@@ -7,10 +7,10 @@
 }
 
 :root {
-  --cesde-pink: #E8005A;
-  --cesde-pink-hover: #c4004d;
-  --cesde-dark: #1a1a1a;
-  --cesde-gray: #555;
+  --cesde-pink: #0A2647;
+  --cesde-pink-hover: #2C3E50;
+  --cesde-dark: #0A2647;
+  --cesde-gray: #2C3E50;
   --header-height: 68px;
 }
 
@@ -90,7 +90,7 @@
 
 .btn-login {
   margin-left: 8px;
-  background: var(--cesde-pink);
+  background: #3498DB;
   color: #fff;
   padding: 9px 22px;
   border-radius: 50px;
@@ -100,14 +100,14 @@
   border: none;
   font-family: 'Montserrat', sans-serif;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 4px 14px rgba(232, 0, 90, 0.3);
+  box-shadow: 0 4px 14px rgba(52, 152, 219, 0.3);
   letter-spacing: 0.3px;
 }
 
 .btn-login:hover {
-  background: var(--cesde-pink-hover);
+  background: #2C3E50;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(232, 0, 90, 0.4);
+  box-shadow: 0 6px 18px rgba(52, 152, 219, 0.4);
 }
 
 .btn-login:active {
@@ -164,7 +164,7 @@
   left: 0;
   right: 0;
   background: #fff;
-  border-bottom: 2px solid var(--cesde-pink);
+  border-bottom: 2px solid #3498DB;
   padding: 12px 24px 20px;
   flex-direction: column;
   gap: 4px;
