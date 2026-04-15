@@ -1,6 +1,17 @@
 package com.ParkingSystem.models;
 
-import jakarta.persistence.*;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tarifas")
@@ -17,17 +28,23 @@ public class Tarifa {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_tarifa", nullable = false)
     private TipoTarifa tipo;
 
+    @Column(name = "valor", nullable = false)
     private double valor;
 
+    @Column(name = "activo", nullable = false)
     private boolean activo;
+
+    // Relación: Una tarifa puede estar en muchas estadías
+    @OneToMany(mappedBy = "tarifa", cascade = CascadeType.ALL)
+    private List<Estadia> estadias;
 
     public Tarifa() {
     }
 
-    public Tarifa(Long id, TipoTarifa tipo, double valor, boolean activo) {
-        this.id = id;
+    public Tarifa(TipoTarifa tipo, double valor, boolean activo) {
         this.tipo = tipo;
         this.valor = valor;
         this.activo = activo;
@@ -64,5 +81,12 @@ public class Tarifa {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    
+
+    public List<Estadia> getEstadias() {
+        return estadias;
+    }
+
+    public void setEstadias(List<Estadia> estadias) {
+        this.estadias = estadias;
+    }
 }

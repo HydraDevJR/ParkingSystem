@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';  //Diego
 import './Header.css';
-import { navLinks, handleResize } from './Header.js';
+import { navLinks, handleResize } from '../../../helpers/Header';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,8 +18,9 @@ const Header = () => {
         {/* LOGO */}
         <a className="logo" href="/">
           <div>
-            <div className="logo-text">CESDE</div>
-            <div className="logo-sub">Parking System</div>
+            {/* Por el momento no tenemos un logo, pero aquí va el nombre de la aplicación para que se vea bien */}
+            <div className="logo-text">Parking System</div>
+            <div className="logo-sub"></div>
           </div>
         </a>
 
