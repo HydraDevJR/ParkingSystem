@@ -1,19 +1,22 @@
-import React from 'react'
-import Header from './header/Header'
-import SideBar from './side-bar/SideBar'
-import Main from './main-layout/MainLayout'
-import Footer from './footer/Footer'
+import React, { useState } from 'react';
+import Header from './header/Header';
+import SideBar from './side-bar/SideBar';
 
-const Layout = ({ children }) => (
-	<div className="layout">
-		<Header />
-		<div className="layout-body">
-			<SideBar />
-			<Main>{children}</Main>
-		</div>
-		<Footer />
-	</div>
-)
+const Layout = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-export default Layout
+  const openSidebar = () => setIsSidebarOpen(true);
+  const closeSidebar = () => setIsSidebarOpen(false);
 
+  return (
+    <div className="min-h-screen bg-slate-100">
+      <Header onMenuClick={openSidebar} />
+      <SideBar isOpen={isSidebarOpen} onClose={closeSidebar} />
+      <main className="pt-20 px-4 md:px-6">
+        {children}
+      </main>
+    </div>
+  );
+};
+
+export default Layout;
