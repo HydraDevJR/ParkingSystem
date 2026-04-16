@@ -11,5 +11,9 @@ export let router = [ // Rutas para pages
     {
         path: "/register",
         element: <Register />
+    },
+    {
+        path: "/dashboard",
+        element: <App />
     }
 ]
