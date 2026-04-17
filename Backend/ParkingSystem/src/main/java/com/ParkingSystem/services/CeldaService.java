@@ -35,7 +35,7 @@ public class CeldaService {
             );
         }
 
-        if (celdaRepositorio.findByNumero(celda.getNumero()).isPresent()) {
+        if (celdaRespositorio.findByNumero(celda.getNumero()).isPresent()) {
 
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Ya existe una celda con ese número"
@@ -91,22 +91,6 @@ public class CeldaService {
     }
 
     // Modificar una celda
-    public Celda modificarCelda(UUID id, Celda celdaActualizada) {
-        Celda celda = obtenerCeldaById(id);
-
-        if (celdaActualizada.getEstado() != null) {
-            celda.setEstado(celdaActualizada.getEstado());
-        }
-
-        return celdaRepositorio.save(celda);
-    }
 
     // Buscar una celda por ID
-    public Celda obtenerCeldaById(UUID id) {
-        return celdaRepositorio.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "La celda no existe"
-                ));
-    }
-}
 
