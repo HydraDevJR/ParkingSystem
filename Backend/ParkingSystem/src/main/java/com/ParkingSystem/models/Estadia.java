@@ -63,8 +63,12 @@ public class Estadia {
     @OneToOne
     @JoinColumn(name = "fk_reserva", referencedColumnName = "id", unique = true)
     private Reserva reserva;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_tarifa", referencedColumnName = "id", nullable = false)
+    private Tarifa tarifa;
     
-    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, EstadoEstadia estado, Reserva reserva) {
+    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, EstadoEstadia estado, Reserva reserva, Tarifa tarifa) {
         this.vehiculo = vehiculo;
         this.celda = celda;
         this.fechaInicio = fechaInicio;
@@ -73,6 +77,7 @@ public class Estadia {
         this.fechaModificacion = fechaModificacion;
         this.estado = estado;
         this.reserva = reserva;
+        this.tarifa = tarifa;
     }
 
     public Estadia() {}
@@ -147,6 +152,14 @@ public class Estadia {
 
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
+    }
+
+    public Tarifa getTarifa() {
+        return tarifa;
+    }
+
+    public void setTarifa(Tarifa tarifa) {
+        this.tarifa = tarifa;
     }
 
 }
