@@ -1,65 +1,63 @@
-import React, { useState, useEffect } from 'react';  //Diego
-import './Header.css';
-import { navLinks, handleResize } from '../../../helpers/Header';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { getLocalStorage } from '../../../helpers/local-storage';
 
-const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+const Header = ({ onMenuClick }) => {
+  const [user, setUser] = useState(null);
 
+  // Cargar usuario desde localStorage al montar el componente
   useEffect(() => {
-    const onResize = () => handleResize(setMenuOpen);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    const storedUser = getLocalStorage('user');
+    setUser(storedUser);
+  }, []);
+
+  // Escuchar cambios en localStorage (por si se loguea desde otra pestaña)
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'user') {
+        const newUser = getLocalStorage('user');
+        setUser(newUser);
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   return (
-    <header className="header">
-      <div className="header-inner">
-
-        {/* LOGO */}
-        <a className="logo" href="/">
-          <div>
-            {/* Por el momento no tenemos un logo, pero aquí va el nombre de la aplicación para que se vea bien */}
-            <div className="logo-text">Parking System</div>
-            <div className="logo-sub"></div>
-          </div>
-        </a>
-
-        {/* NAV DESKTOP */}
-        <nav className="nav-desktop">
-          {navLinks.map((link) => (
-            <a key={link.label} className="nav-link" href={link.href}>
-              {link.label}
-            </a>
-          ))}
-          <button className="btn-login">Iniciar sesión</button>
-        </nav>
-
-        {/* HAMBURGER */}
-        <button
-          className={`hamburger ${menuOpen ? "open" : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Abrir menú"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </div>
-
-      {/* NAV MOBILE */}
-      <nav className={`nav-mobile ${menuOpen ? "open" : ""}`}>
-        {navLinks.map((link) => (
-          <a
-            key={link.label}
-            className="nav-link"
-            href={link.href}
-            onClick={() => setMenuOpen(false)}
+    <header className="fixed top-0 left-0 w-full z-30 bg-white shadow-md">
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Logo + Hamburguesa juntos a la izquierda */}
+        <div className="flex items-center gap-4">
+          <button
+            className="flex flex-col gap-1.5"
+            onClick={onMenuClick}
+            aria-label="Abrir menú"
           >
-            {link.label}
-          </a>
-        ))}
-        <button className="btn-login">Iniciar sesión</button>
-      </nav>
+            <span className="w-6 h-0.5 bg-[#0A2647] rounded" />
+            <span className="w-6 h-0.5 bg-[#0A2647] rounded" />
+            <span className="w-6 h-0.5 bg-[#0A2647] rounded" />
+          </button>
+          <Link to="/" className="text-2xl font-bold text-[#0A2647]">
+            Parking System
+          </Link>
+        </div>
+
+        {/* Zona derecha: saludo al usuario o botón login */}
+        <div>
+          {user ? (
+            <span className="text-slate-700 font-medium">
+              Hola, {user.nombres || user.email || 'Usuario'}
+            </span>
+          ) : (
+            <Link
+              to="/"
+              className="bg-[#0A2647] text-white px-4 py-2 rounded-lg hover:bg-[#0A2647]/90 transition"
+            >
+              Iniciar sesión
+            </Link>
+          )}
+        </div>
+      </div>
     </header>
   );
 };
