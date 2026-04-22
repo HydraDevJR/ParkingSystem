@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const SideBar = ({ isOpen, onClose }) => {
   const menuItems = [
-    { name: 'Inicio', path: '/'},
+    { name: 'Inicio', path: '/dashboard'},
     { name: 'Usuarios', path: '/usuarios'},
     { name: 'Vehículos', path: '/vehiculos'},
     { name: 'Estadías', path: '/estadias',},
