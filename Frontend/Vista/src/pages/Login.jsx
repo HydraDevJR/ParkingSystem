@@ -61,7 +61,7 @@ const Login = () => {
                     </div>
                     <input
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex w-full rounded-lg border border-slate-200 bg-white px-4 py-5 text-lg ring-offset-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3498DB] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
+                    className="flex w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-lg ring-offset-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3498DB] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
                     placeholder="  Email"
                     type="email"
                     />
@@ -74,7 +74,7 @@ const Login = () => {
                     </div>
                     <input
                     onChange={(e) => setPassword(e.target.value)}
-                    className="flex w-full rounded-lg border border-slate-200 bg-white px-4 py-5 text-lg ring-offset-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3498DB] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
+                    className="flex w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-lg ring-offset-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3498DB] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
                     placeholder="  ••••••••"
                     type="password"
                     />
@@ -83,7 +83,7 @@ const Login = () => {
                     <button
                     onClick={signIn}
                     type="button"
-                    className="inline-flex items-center justify-center rounded-lg bg-[#0A2647] px-4 py-5 text-lg font-bold text-white transition-colors hover:bg-[#0A2647]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A2647] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[40px]"
+                    className="inline-flex items-center justify-center rounded-lg bg-[#0A2647] px-4 py-2 text-lg font-bold text-white transition-colors hover:bg-[#0A2647]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A2647] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[40px]"
                     >
                     Log In
                     </button>
