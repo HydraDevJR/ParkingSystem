@@ -1,12 +1,8 @@
-import Layout from "./components/Layout/Layout";
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routes/appRoutes';
 
-export default function App() {
-    return (
-        <Layout>
-            <div className="app-content">
-                <h2>Bienvenidos a Parking System</h2>
-                <p>Usa la barra lateral para navegar por la aplicación</p>
-            </div>
-        </Layout>
-    );
+function App() {
+  return <RouterProvider router={router} />;
 }
+
+export default App;
