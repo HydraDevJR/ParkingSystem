@@ -1,9 +1,9 @@
-const URL_BASE = "https://app-gastos-personales-api.onrender.com" + "/"
+const URL_BASE = "https://parking-json-server.onrender.com"; 
 
-export let urlAPI = {
-    users: URL_BASE + "users/", /* localhost:8080/users/ */
-    merchants: URL_BASE + "merchants/",
-    expenses: URL_BASE + "expenses/",
-    payment_methods: URL_BASE + "payment_methods/",
-    category: URL_BASE + "category/"
-}
+export const urlAPI = {
+  users: `${URL_BASE}/usuarios`,
+  vehiculos: `${URL_BASE}/vehiculos`,
+  celdas: `${URL_BASE}/celdas`,
+  tarifas: `${URL_BASE}/tarifas`,
+  estadias: `${URL_BASE}/estadias`,
+};
