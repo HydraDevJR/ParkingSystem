@@ -1,9 +1,10 @@
-//Hacer import de los componentes a usar en las rutas
-import App from "../App"
-import Login from "../pages/Login"
-import Register from "../pages/Register"
+import Dashboard from '../pages/Dashboard'
+import Login from '../pages/Login'
+import Register from '../pages/Register'
+import Layout from '../components/layout/Layout'
+import RegistroEntrada from '../pages/RegistroEntrada'
 
-export let router = [ // Rutas para pages
+export let router = [
     {
         path: "/",
         element: <Login />
@@ -14,6 +15,11 @@ export let router = [ // Rutas para pages
     },
     {
         path: "/dashboard",
-        element: <App />
-    }
+        element: <Layout />,
+        children: [
+            { index: true, element: <Dashboard /> },
+            { path: "registro-entrada", element: <RegistroEntrada /> },
+        ]
+    },
+
 ]
