@@ -18,6 +18,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+import com.ParkingSystem.models.Tarifa;
+
 @Entity
 @Table(name = "estadias")
 public class Estadia {
@@ -60,11 +62,11 @@ public class Estadia {
     @Column(nullable = false)
     private EstadoEstadia estado;
 
-    @OneToOne
-    @JoinColumn(name = "fk_reserva", referencedColumnName = "id", unique = true)
-    private Reserva reserva;
-    
-    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, EstadoEstadia estado, Reserva reserva) {
+    @ManyToOne
+    @JoinColumn(name = "fk_tarifa", referencedColumnName = "id", nullable = false)
+    private Tarifa tarifa;
+
+    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, EstadoEstadia estado, Tarifa tarifa) {
         this.vehiculo = vehiculo;
         this.celda = celda;
         this.fechaInicio = fechaInicio;
@@ -72,7 +74,7 @@ public class Estadia {
         this.fechaCreacion = fechaCreacion;
         this.fechaModificacion = fechaModificacion;
         this.estado = estado;
-        this.reserva = reserva;
+        this.tarifa = tarifa;
     }
 
     public Estadia() {}
@@ -141,12 +143,12 @@ public class Estadia {
         this.estado = estado;
     }
 
-    public Reserva getReserva() {
-        return reserva;
+    public Tarifa getTarifa() {
+        return tarifa;
     }
 
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
+    public void setTarifa(Tarifa tarifa) {
+        this.tarifa = tarifa;
     }
 
 }
