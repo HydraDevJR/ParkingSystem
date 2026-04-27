@@ -17,7 +17,7 @@ public class UsuarioService {
     private IUsuarioRepositorie usuarioRepositorie;
 
     //Guardar un usuario
-    public Usuario guardarUrsuario(Usuario usuario){
+    public Usuario guardarUsuario(Usuario usuario){
         //Validar la operacion
 
         if(usuarioRepositorie.findById(usuario.getId()).isPresent()){
