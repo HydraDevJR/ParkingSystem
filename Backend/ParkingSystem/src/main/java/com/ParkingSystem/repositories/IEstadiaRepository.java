@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface IEstadiaRepositorio extends JpaRepository<Estadia, UUID> {
+public interface IEstadiaRepository extends JpaRepository<Estadia, UUID> {
 
     // Buscar estadia por ID
     Optional<Estadia> findById(UUID id);

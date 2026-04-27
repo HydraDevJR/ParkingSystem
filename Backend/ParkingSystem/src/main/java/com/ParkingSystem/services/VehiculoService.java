@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ParkingSystem.models.Vehiculo;
-import com.ParkingSystem.repositories.IVehiculoRepositorie;
+import com.ParkingSystem.repositories.IVehiculoRepository;
 
 @Service
 public class VehiculoService {
     
     @Autowired
-    private IVehiculoRepositorie vehiculoRepositorie;
+    private IVehiculoRepository vehiculoRepositorie;
 
     //Guardar un vehículo
     public Vehiculo guardarVehiculo(Vehiculo vehiculo) {

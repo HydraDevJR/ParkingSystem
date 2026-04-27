@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.ParkingSystem.models.Vehiculo;
 
 @Repository
-public interface IVehiculoRepositorie extends JpaRepository<Vehiculo, Integer> {
+public interface IVehiculoRepository extends JpaRepository<Vehiculo, Integer> {
     
     //Buscar por placa exacta (1)
     public Vehiculo findByPlaca(String placa);

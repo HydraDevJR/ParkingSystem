@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.2</version>
+		<version>3.4.1</version>   <!-- Versión estable actual -->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
@@ -13,64 +13,46 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ParkingSystem</name>
 	<description>Sistema de parqueadero institucional</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
 	<dependencies>
+		<!-- Web y REST controllers -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-h2console</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<!-- JPA (Hibernate) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+		<!-- H2 Database (modo memoria) -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Herramientas de desarrollo (hot reload) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+
+		<!-- Pruebas unitarias y de integración -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
+			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	
-   <dependency>
-     <groupId>org.springframework.data</groupId>
-     <artifactId>spring-data-jpa</artifactId>
-     <version>2.1.10.RELEASE</version>
-   </dependency>
- </dependencies>
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -80,5 +62,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
