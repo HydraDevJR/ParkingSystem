@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ITarifaRepositorie extends JpaRepository<Tarifa, Long> {
+public interface ITarifaRepository extends JpaRepository<Tarifa, Long> {
 
     
     List<Tarifa> findByActivoTrue();
@@ -24,5 +24,4 @@ public interface ITarifaRepositorie extends JpaRepository<Tarifa, Long> {
     List<Tarifa> findByValorLessThanEqual(double valor);
 
 
-    Tarifa save(Tarifa tarifa);
 }

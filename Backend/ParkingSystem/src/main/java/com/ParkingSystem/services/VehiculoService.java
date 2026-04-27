@@ -6,14 +6,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ParkingSystem.models.Vehiculo;
-import com.ParkingSystem.repositories.IVehiculoRepositorie;
+import com.ParkingSystem.repositories.IVehiculoRepository;
 
 @Service
 public class VehiculoService {
     
     @Autowired
-    private IVehiculoRepositorie vehiculoRepositorie;
+    private IVehiculoRepository vehiculoRepositorie;
 
+    //Guardar un vehículo
     public Vehiculo guardarVehiculo(Vehiculo vehiculo) {
 
         if(vehiculoRepositorie.findById(vehiculo.getId()).isPresent()){
@@ -62,5 +63,15 @@ public class VehiculoService {
 
 
         return vehiculoRepositorie.save(vehiculo);
+    }
+
+    //Listar todos los vehículos
+    public Iterable<Vehiculo> listarVehiculos(){
+        return vehiculoRepositorie.findAll();
+    }
+
+    //Eliminar un vehículo
+    public void eliminarVehiculo(Integer id){
+        vehiculoRepositorie.deleteById(id);
     }
 }

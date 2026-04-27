@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ParkingSystem.models.Tarifa;
-import com.ParkingSystem.repositories.ITarifaRepositorie;
+import com.ParkingSystem.repositories.ITarifaRepository;
 
 @Service
 public class TarifaService {
 
     @Autowired
-    private ITarifaRepositorie tarifaRepositorie;
+    private ITarifaRepository tarifaRepositorie;
 
     // Guardar una tarifa
     public Tarifa guardarTarifa(Tarifa tarifa) {

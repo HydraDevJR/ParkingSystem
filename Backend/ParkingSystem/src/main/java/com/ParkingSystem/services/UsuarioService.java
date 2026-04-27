@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ParkingSystem.models.Usuario;
-import com.ParkingSystem.repositories.IUsuarioRepositorie;
+import com.ParkingSystem.repositories.IUsuarioRepository;
 
 @Service
 public class UsuarioService {
 
     @Autowired
-    private IUsuarioRepositorie usuarioRepositorie;
+    private IUsuarioRepository usuarioRepositorie;
 
     //Guardar un usuario
     public Usuario guardarUsuario(Usuario usuario){
