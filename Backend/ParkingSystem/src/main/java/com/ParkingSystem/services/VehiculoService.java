@@ -14,6 +14,7 @@ public class VehiculoService {
     @Autowired
     private IVehiculoRepositorie vehiculoRepositorie;
 
+    //Guardar un vehículo
     public Vehiculo guardarVehiculo(Vehiculo vehiculo) {
 
         if(vehiculoRepositorie.findById(vehiculo.getId()).isPresent()){
@@ -62,5 +63,15 @@ public class VehiculoService {
 
 
         return vehiculoRepositorie.save(vehiculo);
+    }
+
+    //Listar todos los vehículos
+    public Iterable<Vehiculo> listarVehiculos(){
+        return vehiculoRepositorie.findAll();
+    }
+
+    //Eliminar un vehículo
+    public void eliminarVehiculo(Integer id){
+        vehiculoRepositorie.deleteById(id);
     }
 }
