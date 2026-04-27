@@ -35,10 +35,17 @@ const RegistroEntrada = () => {
                     "/dashboard"
                 );
             } else {
-                const errorData = await response.json();
-                redirectAlert("Error", errorData.message || "No se pudo registrar la entrada", "error", "/dashboard/registro-entrada");
-            }
+                let errorMessage = "No se pudo registrar la entrada";
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData?.message || errorMessage;
+                } catch (parseError) {
+                    console.error("Error parsing response JSON:", parseError);
+                }
+                redirectAlert("Error", errorMessage, "error", "/dashboard/registro-entrada");
+           }
         } catch (error) {
+            console.error("Registro de entrada fallida, error: " + error)
             redirectAlert("Error de conexión", "Intente más tarde", "error", "/dashboard/registro-entrada");
         }
     };

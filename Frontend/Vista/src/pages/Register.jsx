@@ -39,6 +39,7 @@ const Register = () => {
         redirectAlert("Error", "No se pudo crear la cuenta", "error", "/register")
       }
     } catch (error) {
+      console.error("Registro fallido error: " + error)
       redirectAlert("Error de conexión", "Intenta más tarde", "error", "/register")
     }
   }
