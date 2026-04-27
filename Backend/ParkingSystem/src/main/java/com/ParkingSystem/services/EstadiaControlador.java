@@ -5,25 +5,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import com.ParkingSystem.models.Usuario;
-import com.ParkingSystem.services.UsuarioService;
+import com.ParkingSystem.models.estadia;
+import com.ParkingSystem.services.EstadiaService;
 
 @RestController
-@RequestMapping("/ParkingSystem/v1/usuarios")
-public class UsuarioControlador {
+@RequestMapping("/ParkingSystem/v1/estadias")
+public class EstadiaControlador {
     
     //Inyectar el servicio correspondiente
     @Autowired
-    private UsuarioService servicio;
+    private EstadiaService servicio;
 
     //para cada servicio ofrecido se debe programar una funcion
     //esa funcion recibira las peticiones del pedido y respondera
 
-    //funcion controladora del servicio guardar usuario
+    //funcion controladora del servicio guardar estadia
     @PostMapping
-    public ResponseEntity<?> controladorGuardar(@RequestBody Usuario datos){
+    public ResponseEntity<?> controladorGuardar(@RequestBody estadia datos){
         return ResponseEntity.status(HttpStatus.ok).body(
-            servicio.guardarUsuario(datos)
+            servicio.guardarEstadia(datos)
         );
     }
     
@@ -32,7 +32,7 @@ public class UsuarioControlador {
     @GetMapping
     public ResponseEntity<?>controladorListarTodo(){
         return ResponseEntity.status(HttpStatus.ok).body(
-            servicio.listarUsuarios()
+            servicio.listarEstadias()
         );
     }
 
