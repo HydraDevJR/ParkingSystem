@@ -22,4 +22,7 @@ public interface ITarifaRepositorie extends JpaRepository<Tarifa, Long> {
 
     
     List<Tarifa> findByValorLessThanEqual(double valor);
+
+
+    Tarifa save(Tarifa tarifa);
 }
