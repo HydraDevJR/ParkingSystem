@@ -1,5 +1,5 @@
 import React from 'react'  //Felipe
-import './Main.css'
+import './MainLayout.css'
 
 const Main = ({ children }) => (
 	<main className="app-main">

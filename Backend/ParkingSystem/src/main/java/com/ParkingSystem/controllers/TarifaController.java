@@ -1,4 +1,4 @@
-package com.ParkingSystem.controladores;
+package com.ParkingSystem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD:Backend/ParkingSystem/src/main/java/com/ParkingSystem/controladores/ControladorTarifa.java
 import com.ParkingSystem.models.Tarifa;
 import com.ParkingSystem.services.TarifaServicie;
+=======
+>>>>>>> main:Backend/ParkingSystem/src/main/java/com/ParkingSystem/controllers/TarifaController.java
 
 @RestController
-@RequestMapping("/ParkingSystem/v1/tarifas")
-public class ControladorTarifa {
+@RequestMapping("/parkingsystem/v1/tarifas")
+public class TarifaController {
 
     @Autowired
     TarifaServicie servicio;

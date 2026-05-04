@@ -1,7 +1,8 @@
 package com.ParkingSystem.models;
 
-import java.util.UUID;
-
+import com.ParkingSystem.models.utils.EstadoCelda;
+import com.ParkingSystem.models.utils.TipoVehiculo;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,21 +10,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "celdas")
 public class Celda {
-
-    public enum EstadoCelda {
-        Disponible,
-        Ocupada,
-        Reservada
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,35 +30,21 @@ public class Celda {
     @Column(name = "numero_piso", nullable = false)
     private Integer piso;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_tipo_vehiculo", referencedColumnName = "id", nullable = false)
-    private TipoVehiculo tipo;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_vehiculo", nullable = false, length = 20)
+    private TipoVehiculo tipoVehiculo;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado_celda", nullable = false)
+    @Column(name = "estado_celda", nullable = false, length = 20)
     private EstadoCelda estado;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_parqueadero", referencedColumnName = "id", nullable = false)
-    private Parqueadero parqueadero;
-
-    @OneToMany(mappedBy = "celda")
+    // Relación OneToMany con Estadia
+    @OneToMany(mappedBy = "celda" , cascade = CascadeType.ALL)
     private List<Estadia> estadias;
-
-    // relacion con reserva
-
-    public Celda(UUID id, Integer numero, Integer piso, TipoVehiculo tipo, EstadoCelda estado, Parqueadero parqueadero, List<Estadia> estadias) {
-        this.id = id;
-        this.numero = numero;
-        this.piso = piso;
-        this.tipo = tipo;
-        this.estado = estado;
-        this.parqueadero = parqueadero;
-        this.estadias = estadias;
-    }
 
     public Celda() {}
 
+    // Getters y Setters
     public UUID getId() {
         return id;
     }
@@ -89,12 +69,12 @@ public class Celda {
         this.piso = piso;
     }
 
-    public TipoVehiculo getTipo() {
-        return tipo;
+    public TipoVehiculo getTipoVehiculo() {
+        return tipoVehiculo;
     }
 
-    public void setTipo(TipoVehiculo tipo) {
-        this.tipo = tipo;
+    public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
     }
 
     public EstadoCelda getEstado() {
@@ -105,14 +85,6 @@ public class Celda {
         this.estado = estado;
     }
 
-    public Parqueadero getParqueadero() {
-        return parqueadero;
-    }
-
-    public void setParqueadero(Parqueadero parqueadero) {
-        this.parqueadero = parqueadero;
-    }
-
     public List<Estadia> getEstadias() {
         return estadias;
     }
@@ -120,5 +92,4 @@ public class Celda {
     public void setEstadias(List<Estadia> estadias) {
         this.estadias = estadias;
     }
-
 }
