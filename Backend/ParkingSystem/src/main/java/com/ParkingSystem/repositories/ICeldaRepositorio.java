@@ -13,11 +13,8 @@ import java.util.UUID;
 @Repository
 public interface ICeldaRepositorio extends JpaRepository<Celda, UUID> {
 
-    // Buscar por número de Celda
-    Optional<Celda> findByNumero(Integer numero);
-
-    // Buscar por piso
-    List<Celda> findByPiso(Integer piso);
+    // Buscar por Código de celda
+    List<Celda> findByCodigo(String codigo);
 
     // Buscar por estado
     List<Celda> findByEstado(EstadoCelda estado);
@@ -25,8 +22,8 @@ public interface ICeldaRepositorio extends JpaRepository<Celda, UUID> {
     // Buscar por tipo de vehículo
     List<Celda> findByTipoVehiculo(TipoVehiculo tipoVehiculo);
 
-    // Buscar por piso y estado
-    List<Celda> findByPisoAndEstado(Integer piso, EstadoCelda estado);
+    // Buscar por código y estado
+    List<Celda> findByCodigoAndEstado(String codigo, EstadoCelda estado);
 
     // Buscar por tipo y estado
     List<Celda> findByTipoVehiculoAndEstado(TipoVehiculo tipoVehiculo, EstadoCelda estado);

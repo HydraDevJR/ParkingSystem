@@ -20,15 +20,12 @@ import java.util.UUID;
 public class Celda {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false, unique = true)
-    private UUID id;
+    private Integer id;
 
-    @Column(name = "numero_celda", nullable = false, unique = true)
-    private Integer numero;
-
-    @Column(name = "numero_piso", nullable = false)
-    private Integer piso;
+    @Column(name = "Codigo", nullable = false, unique = true )
+    private String codigo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_vehiculo", nullable = false, length = 20)
@@ -45,28 +42,20 @@ public class Celda {
     public Celda() {}
 
     // Getters y Setters
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Integer getNumero() {
-        return numero;
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    public Integer getPiso() {
-        return piso;
-    }
-
-    public void setPiso(Integer piso) {
-        this.piso = piso;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public TipoVehiculo getTipoVehiculo() {

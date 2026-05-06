@@ -1,7 +1,6 @@
 package com.ParkingSystem.services;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,42 +21,35 @@ public class CeldaService {
         // Validar que no exista
         if (celda.getId() != null && celdaRepositorio.findById(celda.getId()).isPresent()) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "La celda ya existe"
+                HttpStatus.BAD_REQUEST, "La celda ya existe"
             );
         }
 
-        // Validar número de celda
-        if (celda.getNumero() == null || celda.getNumero() <= 0) {
+        //validar codigo de celda
+        if (celda.getCodigo() == null || celda.getCodigo().isBlank() || celda.getCodigo().isEmpty()) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "El número de la celda es obligatorio y debe ser mayor a 0"
+                HttpStatus.BAD_REQUEST, "El código de la celda es obligatorio"
             );
         }
 
-        // Validar unicidad del número de celda
-        if (celdaRepositorio.findByNumero(celda.getNumero()).isPresent()) {
+        // Validar que el código de la celda sea único
+        if (celdaRepositorio.findByCodigo(celda.getCodigo()).isPresent()) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Ya existe una celda con ese número"
-            );
-        }
-
-        // Validar piso
-        if (celda.getPiso() == null || celda.getPiso() < 0) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "El número de piso es obligatorio y debe ser mayor o igual a 0"
+                HttpStatus.BAD_REQUEST, "Ya existe una celda con el código " + celda.getCodigo()
             );
         }
 
         // Validar tipo de vehículo
         if (celda.getTipoVehiculo() == null) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "El tipo de vehículo es obligatorio"
+                HttpStatus.BAD_REQUEST, "El tipo de vehículo es obligatorio"
             );
         }
 
         // Validar estado de la celda
         if (celda.getEstado() == null) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "El estado de la celda es obligatorio"
+                HttpStatus.BAD_REQUEST, "El estado de la celda es obligatorio"
             );
         }
 
@@ -70,53 +62,51 @@ public class CeldaService {
     }
 
     // Buscar una celda por ID
-    public Celda buscarCeldaPorId(UUID id) {
-        return celdaRepositorio.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Celda no encontrada con ID: " + id
-                ));
+    public Celda buscarCeldaPorId(Integer id) {
+
+        Optional<Celda> buscandoCelda = celdaRepositorio.findById(id);
+        if (buscandoCelda.isEmpty()) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Celda no encontrada."
+            );
+
+        } else {
+            return buscandoCelda.get();
+        }
     }
 
     // Modificar una celda
-    public Celda modificarCelda(UUID id, Celda celdaActualizada) {
-        Celda celdaExistente = buscarCeldaPorId(id);
+    public Celda modificarCelda(Integer id, Celda celdaActualizada) {
+        Optional<Celda> buscandoCelda = celdaRepositorio.findById(id);
+        if (buscandoCelda.isEmpty()) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Celda no encontrada con ID: " + id
+            );
 
-        // Actualizar número (si se envía y es diferente)
-        if (celdaActualizada.getNumero() != null) {
-            if (!celdaExistente.getNumero().equals(celdaActualizada.getNumero()) &&
-                celdaRepositorio.findByNumero(celdaActualizada.getNumero()).isPresent()) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "Ya existe una celda con el número " + celdaActualizada.getNumero()
-                );
-            }
-            celdaExistente.setNumero(celdaActualizada.getNumero());
+        } else {
+            Celda celdaEncontrada= buscandoCelda.get();
+            //modifcación de datos de la celda
+            celdaEncontrada.setCodigo(celdaActualizada.getCodigo());
+            celdaEncontrada.setTipoVehiculo(celdaActualizada.getTipoVehiculo());
+            celdaEncontrada.setEstado(celdaActualizada.getEstado());
+            return celdaRepositorio.save(celdaEncontrada);
         }
-
-        // Actualizar piso
-        if (celdaActualizada.getPiso() != null && celdaActualizada.getPiso() >= 0) {
-            celdaExistente.setPiso(celdaActualizada.getPiso());
-        }
-
-        // Actualizar tipo de vehículo
-        if (celdaActualizada.getTipoVehiculo() != null) {
-            celdaExistente.setTipoVehiculo(celdaActualizada.getTipoVehiculo());
-        }
-
-        // Actualizar estado
-        if (celdaActualizada.getEstado() != null) {
-            celdaExistente.setEstado(celdaActualizada.getEstado());
-        }
-
-        return celdaRepositorio.save(celdaExistente);
     }
 
     // Eliminar una Celda por ID
-    public void eliminarCelda(UUID id) {
-        if (!celdaRepositorio.existsById(id)) {
+    public boolean eliminarCelda(Integer id) {
+
+        Optional<Celda> buscandoCelda = celdaRepositorio.findById(id);
+        if (buscandoCelda.isEmpty()) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "La celda no existe"
+                    HttpStatus.BAD_REQUEST,
+                    "Celda no encontrada con ID:" + id
             );
+        }else{
+            celdaRepositorio.deleteById(id);
+            return true;
         }
-        celdaRepositorio.deleteById(id);
     }
 }
