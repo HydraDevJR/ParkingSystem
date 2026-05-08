@@ -13,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "celdas")
@@ -50,7 +49,7 @@ public class Celda {
         this.id = id;
     }
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
