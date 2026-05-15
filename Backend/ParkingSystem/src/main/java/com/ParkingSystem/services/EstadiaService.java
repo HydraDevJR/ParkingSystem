@@ -12,8 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 import com.ParkingSystem.models.Celda;
 import com.ParkingSystem.models.Estadia;
 import com.ParkingSystem.models.Tarifa;
+import com.ParkingSystem.models.Usuario;
 import com.ParkingSystem.models.Vehiculo;
-import com.ParkingSystem.repositories.IEstadiaRepository;
+import com.ParkingSystem.repositories.IEstadiaRepositorio;
 
 @Service
 public class EstadiaService {
