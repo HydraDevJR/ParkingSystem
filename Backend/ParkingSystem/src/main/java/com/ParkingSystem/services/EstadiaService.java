@@ -13,13 +13,13 @@ import com.ParkingSystem.models.Celda;
 import com.ParkingSystem.models.Estadia;
 import com.ParkingSystem.models.Tarifa;
 import com.ParkingSystem.models.Vehiculo;
-import com.ParkingSystem.repositories.IEstadiaRepositorio;
+import com.ParkingSystem.repositories.IEstadiaRepository;
 
 @Service
 public class EstadiaService {
 
     @Autowired
-    private IEstadiaRepositorio estadiaRepositorio;
+    private IEstadiaRepository estadiaRepositorio;
 
     // Guardar una Estadia
     public Estadia guardarEstadia(Estadia estadia) {

@@ -1,15 +1,17 @@
 package com.ParkingSystem.repositories;
 
-import org.springframework.stereotype.Repository;
 import com.ParkingSystem.models.Celda;
+import com.ParkingSystem.models.utils.EstadoCelda;
+import com.ParkingSystem.models.utils.TipoVehiculo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.UUID;
 
 @Repository
-public interface ICeldaRepositorio  extends JpaRepository<Celda, Integer> {
+public interface ICeldaRepositorio extends JpaRepository<Celda, UUID> {
 
     // Buscar por número de Celda
     Optional<Celda> findByNumero(Integer numero);
@@ -18,18 +20,14 @@ public interface ICeldaRepositorio  extends JpaRepository<Celda, Integer> {
     List<Celda> findByPiso(Integer piso);
 
     // Buscar por estado
-    List<Celda> findByEstado(Celda.EstadoCelda estado);
+    List<Celda> findByEstado(EstadoCelda estado);
 
     // Buscar por tipo de vehículo
-    List<Celda> findByTipo(TipoVehiculo tipo);
+    List<Celda> findByTipoVehiculo(TipoVehiculo tipoVehiculo);
 
-    // Buscar por parqueadero
-    List<Celda> findByParqueadero(Parqueadero parqueadero);
-
-    // Buscar por piso y estado 
-    List<Celda> findByPisoAndEstado(Integer piso, Celda.EstadoCelda estado);
+    // Buscar por piso y estado
+    List<Celda> findByPisoAndEstado(Integer piso, EstadoCelda estado);
 
     // Buscar por tipo y estado
-    List<Celda> findByTipoAndEstado(TipoVehiculo tipo, Celda.EstadoCelda estado);
-
+    List<Celda> findByTipoVehiculoAndEstado(TipoVehiculo tipoVehiculo, EstadoCelda estado);
 }

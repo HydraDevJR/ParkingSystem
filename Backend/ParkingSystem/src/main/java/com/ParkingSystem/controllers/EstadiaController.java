@@ -1,16 +1,20 @@
-package com.ParkingSystem.controladores;
+package com.ParkingSystem.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ParkingSystem.models.estadia;
+import com.ParkingSystem.models.Estadia;
 import com.ParkingSystem.services.EstadiaService;
 
 @RestController
-@RequestMapping("/ParkingSystem/v1/estadias")
-public class EstadiaControlador {
+@RequestMapping("/parkingsystem/v1/estadias")
+public class EstadiaController {
     
     //Inyectar el servicio correspondiente
     @Autowired
@@ -21,16 +25,16 @@ public class EstadiaControlador {
 
     //Funcion controladora del servicio de guardar una estadia
     @PostMapping
-    public ResponseEntity<?> controllerGuardar(@RequestBody estadia estadia){
-        return ResponseEntity.status(HttpStatus.OK).body(
-            servicio.guardarEstadia(estadia)
+    public ResponseEntity<?> controladorGuardar(@RequestBody estadia datos){
+        return ResponseEntity.status(HttpStatus.ok).body(
+            servicio.guardarEstadia(datos)
         );
     }
 
     //Funcion controladora del servicio de listar todas las estadias
     @GetMapping
-    public ResponseEntity<?> controllerListar(){
-        return ResponseEntity.status(HttpStatus.OK).body(
+    public ResponseEntity<?>controladorListarTodo(){
+        return ResponseEntity.status(HttpStatus.ok).body(
             servicio.listarEstadias()
         );
     }
