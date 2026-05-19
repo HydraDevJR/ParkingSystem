@@ -68,7 +68,7 @@ public class Estadia {
         nota: no se incluyen la fechaCreacion y ni fechaModificacion porque se manejan automaticamente 
         con las anotaciones @CreationTimestamp y @UpdateTimestamp respectivamente
     */
-    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, EstadoEstadia estado, Tarifa tarifa) {
+    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, EstadoEstadia estado, Tarifa tarifa) {
         this.vehiculo = vehiculo;
         this.celda = celda;
         this.fechaInicio = fechaInicio;
