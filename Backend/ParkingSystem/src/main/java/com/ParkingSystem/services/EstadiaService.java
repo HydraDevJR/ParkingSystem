@@ -12,8 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 import com.ParkingSystem.models.Celda;
 import com.ParkingSystem.models.Estadia;
 import com.ParkingSystem.models.Tarifa;
+import com.ParkingSystem.models.Usuario;
 import com.ParkingSystem.models.Vehiculo;
-import com.ParkingSystem.repositories.IEstadiaRepository;
+import com.ParkingSystem.repositories.IEstadiaRepositorio;
 
 @Service
 public class EstadiaService {
@@ -249,5 +250,54 @@ public class EstadiaService {
             );
         }
         return estadiaRepositorio.findByTarifaAndEstado(tarifa, Estadia.EstadoEstadia.Finalizada);
+    }
+
+    // Servicio para eliminar una estadia en bd
+
+    public boolean eliminar_Estadia(Integer id){
+
+        Optional<Estadia> estadiaQueBusco = estadiaRepositorio.findById(id);
+
+        if (estadiaQueBusco.isEmpty()) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "La estadia no existe en BD"
+            );
+            
+        }
+        else{
+            estadiaRepositorio.deleteById(id);
+            return true;
+        }
+    }
+    
+    //servicio para buscar una estadia por su id
+    public Estadia buscar_por_id(Integer id){
+        Optional<Estadia> estadiaBuscada=estadiaRepositorio.findById(id);
+        if(estadiaBuscada.isEmpty()){
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "La estadia no existe en BD"
+            );
+        }else{
+            return estadiaBuscada.get();
+        }
+    }
+
+    //Servicio para modificar una estadia en BD
+    public Estadia modificar_estadia(Integer id, Estadia datosNuevos){
+        Optional<Estadia> estadiaQueBusco = estadiaRepositorio.findById(id);
+        if(estadiaQueBusco.isEmpty()){
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "El usuario no existe en BD"
+            );
+        }else{
+            Estadia estadiaQueEncontre=estadiaQueBusco.get();
+            //Defino que campos voy a editar
+            //cambiemos el nombre
+            estadiaQueEncontre.setNombres(datosNuevos.getNombres());
+            return estadiaRepositorio.save(EstadiaQueEncontre);
+
+        }
     }
 }

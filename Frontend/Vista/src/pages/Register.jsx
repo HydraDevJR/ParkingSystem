@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { urlAPI } from "../services/api"
-import { redirectAlert } from "../helpers/alerts"
+import { generalAlert, redirectAlert } from "../helpers/alerts"
 import { saveLocalStorage } from "../helpers/local-storage"
 
 const Register = () => {
@@ -43,6 +43,40 @@ const Register = () => {
       redirectAlert("Error de conexión", "Intenta más tarde", "error", "/register")
     }
   }
+
+  function getUsers(){
+    fetch(end_points.users)
+    .then((response) => response.json())
+    .then((data) => setUsers(data));
+  }
+  function findUser(){
+    let auth =users.find(
+      (item) => email == item.email || documento == item.password,
+    );
+    return auth;
+  }
+
+  function saveUser(){
+    let user = { nombres, email, password, documento, tipodocumento, edad};
+    console.log(user);
+    if (findUser()){
+      generalAlert("Error", "Correo y/o documento ya esta en el sistema ")
+    }
+    //fetch(end_points.users,{
+   //  body: JSON.stringify(user),
+    //  method: "POST"
+    //})
+    //.then((response) => response.json())
+    //.then((data) => console.log(data));
+  }
+
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+
+
 
   return (
     <div>
@@ -124,7 +158,6 @@ const Register = () => {
                 </button>
               </div>
             </div>
-
             <footer className="text-center">
               <p className="text-sm text-slate-300 dark:text-slate-400">
                 ¿Ya tienes una cuenta?
