@@ -1,31 +1,56 @@
 package com.ParkingSystem.controllers;
 
-import com.ParkingSystem.models.Tarifa;
-import com.ParkingSystem.services.TarifaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD:Backend/ParkingSystem/src/main/java/com/ParkingSystem/controladores/ControladorTarifa.java
+import com.ParkingSystem.models.Tarifa;
+import com.ParkingSystem.services.TarifaServicie;
+=======
+>>>>>>> main:Backend/ParkingSystem/src/main/java/com/ParkingSystem/controllers/TarifaController.java
 
 @RestController
 @RequestMapping("/parkingsystem/v1/tarifas")
 public class TarifaController {
 
     @Autowired
-    private TarifaService servicio;
+    TarifaServicie servicio;
 
     @PostMapping
-    public ResponseEntity<?> controladorGuardar(@RequestBody Tarifa datos) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                servicio.guardarTarifa(datos)
-        );
+    public ResponseEntity<?> controladorGuardar(@RequestBody Tarifa datos){
+        return ResponseEntity.status(HttpStatus.OK).body(servicio.guardar_tarifa(datos));
     }
 
     @GetMapping
-    public ResponseEntity<?> controladorListar() {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                servicio.Listar_Tarifas()
-        );
+    public ResponseEntity<?> controladorListar(){
+        return ResponseEntity.status(HttpStatus.OK).body(servicio.listar_tarifas());
     }
+
+    // controlador para modificar
+    @PutMapping("/{id}")
+    public ResponseEntity<?> controladorModificar(@PathVariable Integer id, @RequestBody Tarifa datos){
+        return ResponseEntity.status(HttpStatus.OK).body(servicio.modificar_tarifa(id, datos));
+    }
+
+    // controlador para eliminar
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> controladorEliminar(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(servicio.eliminar_tarifa(id));
+    }
+
+    // controlador para buscar por id
+    @GetMapping("/{id}")
+    public ResponseEntity<?> controladorBuscarPorId(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(servicio.buscar_tarifa_por_id(id));
+    }
+
 }

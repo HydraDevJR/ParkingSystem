@@ -1,5 +1,6 @@
 package com.ParkingSystem.models;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -7,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,36 +27,34 @@ public class Tarifa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
+    @Column(name = "tipo_tarifa", nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_tarifa", nullable = false)
     private TipoTarifa tipo;
 
-    @Column(name = "valor", nullable = false)
-    private double valor;
+    @Column(name = "valor", nullable = false, precision = 10, scale = 2)
+    private BigDecimal valor;
 
     @Column(name = "activo", nullable = false)
-    private boolean activo;
+    private Boolean activo;
 
-    // Relación: Una tarifa puede estar en muchas estadías
-    @OneToMany(mappedBy = "tarifa", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tarifa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Estadia> estadias;
 
-    public Tarifa() {
-    }
+    public Tarifa() {}
 
-    public Tarifa(TipoTarifa tipo, double valor, boolean activo) {
+    public Tarifa(TipoTarifa tipo, BigDecimal valor, Boolean activo) {
         this.tipo = tipo;
         this.valor = valor;
         this.activo = activo;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,19 +66,19 @@ public class Tarifa {
         this.tipo = tipo;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
-    public boolean isActivo() {
+    public Boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
     }
 
