@@ -90,7 +90,7 @@ const Login = () => {
                 </div>
             </div>
             <footer className="text-center">
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-sm text-slate-300 dark:text-slate-400">
                 Don't have an account?
                 <Link className="font-semibold text-[#3498DB] hover:underline ml-1" to="/register">
                     <br />Sign up free

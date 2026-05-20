@@ -1,8 +1,21 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes/appRoutes';
+import Contacto from './pages/Contacto.jsx';
+import Ayuda from './pages/Ayuda.jsx';
+import Terminos from './pages/Terminos.jsx';
 
-function App() {
-  return <RouterProvider router={router} />;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/ayuda" element={<Ayuda />} />
+        <Route path="/terminos" element={<Terminos />} />
+      </Routes>
+
+      <Footer />
+    </BrowserRouter>
+  );
 }
 
-export default App;

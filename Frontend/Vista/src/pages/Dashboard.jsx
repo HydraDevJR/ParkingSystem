@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getLocalStorage } from "../helpers/local-storage";
 import { urlAPI } from "../services/api";
+import "../components/Layout/footer/Footer.css";
+import "./Ayuda";
+import "./Terminos";
+import Footer from "../components/Layout/footer/Footer";
+
 
 const Dashboard = () => {
     const [user, setUser] = useState(null);
@@ -332,6 +337,36 @@ const Dashboard = () => {
                     </div>
                 </div>
             </section>
+            <Footer />
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     );
 };
