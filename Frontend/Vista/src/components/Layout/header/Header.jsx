@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { getLocalStorage } from '../../../helpers/local-storage';
 
 const Header = ({ onMenuClick }) => {
-  const [user, setUser] = useState(null);
-
+  // const [user, setUser] = useState(null);
   // Cargar usuario desde localStorage al montar el componente
-  useEffect(() => {
-    const storedUser = getLocalStorage('user');
-    setUser(storedUser);
-  }, []);
+  const [user, setUser] = useState(() => getLocalStorage('user'));
+
+  // useEffect(() => {
+  //   const storedUser = getLocalStorage('user');
+  //   setUser(storedUser);
+  // }, []);
 
   // Escuchar cambios en localStorage (por si se loguea desde otra pestaña)
   useEffect(() => {
@@ -23,13 +24,14 @@ const Header = ({ onMenuClick }) => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
+
   return (
     <header className="fixed top-0 left-0 w-full z-30 bg-white shadow-md">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo + Hamburguesa juntos a la izquierda */}
         <div className="flex items-center gap-4">
           <button
-            className="flex flex-col gap-1.5"
+            className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-slate-100 cursor-pointer transition-all duration-150 active:bg-[#3498DB]/20"
             onClick={onMenuClick}
             aria-label="Abrir menú"
           >

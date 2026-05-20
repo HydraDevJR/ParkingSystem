@@ -24,7 +24,7 @@ public class CeldaController {
     @PostMapping
     public ResponseEntity<?> guardarCelda(@RequestBody Celda celda) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                celdaService.guardarCelda(celda)
+            celdaService.guardarCelda(celda)
         );
     }
 
@@ -32,7 +32,30 @@ public class CeldaController {
     @GetMapping
     public ResponseEntity<?> listarCeldas() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                celdaService.listarCeldas()
+            celdaService.listarCeldas()
+        );
+    }
+
+    // Controlador para modificar una celda
+    @PutMapping("/{id}")
+    public ResponseEntity<?> controladorModificarCelda(@PathVariable Integer id, @RequestBody Celda datosActualizados) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+            celdaService.modificarCelda(id, datosActualizados)
+        );s
+    }
+
+    // controlador para eliminar una celda
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarCelda(@PathVariable Integer id) {
+        celdaService.eliminarCelda(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    //Controlador para buscar por id
+    @GetMapping("/{id}")
+    public ResponseEntity<?> controladorBuscarPorId(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+            celdaService.buscarCeldaPorId(id)
         );
     }
 
