@@ -1,7 +1,6 @@
 package com.ParkingSystem.models;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,9 +29,9 @@ public class Estadia {
     
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false, nullable = false, unique = true)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false, unique = true)
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "fk_vehiculo", referencedColumnName = "id", nullable = false)
@@ -42,10 +41,10 @@ public class Estadia {
     @JoinColumn(name = "fk_celda", referencedColumnName = "id", nullable = false)
     private Celda celda;
 
-    @Column(name = "fecha_inicio", nullable = false, updatable = false)
+    @Column(name = "fecha_inicio", nullable = false)
     private LocalDateTime fechaInicio;
 
-    @Column(name = "fecha_fin", nullable = true, updatable = false)
+    @Column(name = "fecha_fin", nullable = true)
     private LocalDateTime fechaFin;
 
     @CreationTimestamp
@@ -64,24 +63,27 @@ public class Estadia {
     @JoinColumn(name = "fk_tarifa", referencedColumnName = "id", nullable = false)
     private Tarifa tarifa;
 
-    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaCreacion, LocalDateTime fechaModificacion, EstadoEstadia estado, Tarifa tarifa) {
+    // Constructor vacío y constructor con parámetros
+    /*
+        nota: no se incluyen la fechaCreacion y ni fechaModificacion porque se manejan automaticamente 
+        con las anotaciones @CreationTimestamp y @UpdateTimestamp respectivamente
+    */
+    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, EstadoEstadia estado, Tarifa tarifa) {
         this.vehiculo = vehiculo;
         this.celda = celda;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaModificacion = fechaModificacion;
         this.estado = estado;
         this.tarifa = tarifa;
     }
 
     public Estadia() {}
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

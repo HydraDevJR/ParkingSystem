@@ -1,6 +1,7 @@
 package com.ParkingSystem.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,12 +19,6 @@ public class CeldaService {
 
     // Guardar una Celda
     public Celda guardarCelda(Celda celda) {
-        // Validar que no exista
-        if (celda.getId() != null && celdaRepositorio.findById(celda.getId()).isPresent()) {
-            throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST, "La celda ya existe"
-            );
-        }
 
         //validar codigo de celda
         if (celda.getCodigo() == null || celda.getCodigo().isBlank() || celda.getCodigo().isEmpty()) {

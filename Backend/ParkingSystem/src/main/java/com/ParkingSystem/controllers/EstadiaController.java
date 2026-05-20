@@ -22,7 +22,7 @@ public class EstadiaController {
     
     //Inyectar el servicio correspondiente
     @Autowired
-    private EstadiaService servicio;
+    private EstadiaService estadiaService;
 
     //para cada servicio ofrecido se debe programar una funcion
     //esa funcion recibira las peticiones del pedido y respondera
@@ -67,4 +67,19 @@ public class EstadiaController {
 
 
 
+    //función controladora del servicio buscar estadia por vehiculo
+    @GetMapping("/vehiculo/{id}")
+    public ResponseEntity<?> controladorBuscarPorVehiculo(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+            estadiaService.obtenerEstadiasActivasPorVehiculo(id)
+        );
+    }
+
+    //Función controladora buscar estadia por celda
+    @GetMapping("/celda/{id}")
+    public ResponseEntity<?> controladorBuscarPorCelda(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+            estadiaService.obtenerEstadiasPorCelda(id)
+        );
+    }
 }

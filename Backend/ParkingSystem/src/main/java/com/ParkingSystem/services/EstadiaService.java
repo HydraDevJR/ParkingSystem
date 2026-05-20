@@ -2,7 +2,7 @@ package com.ParkingSystem.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +22,13 @@ public class EstadiaService {
     @Autowired
     private IEstadiaRepository estadiaRepositorio;
 
+    //Inyectar los respositorios de vehiculo y Celda (para búsquedas por vehiculo y celda)
+    @Autowired
+    private IVehiculoRepository vehiculoRepositorio;
+    
+    @Autowired
+    private ICeldaRepositorio celdaRepositorio;
+
     // Guardar una Estadia
     public Estadia guardarEstadia(Estadia estadia) {
         // Validaciones
@@ -31,30 +38,35 @@ public class EstadiaService {
             );
         }
 
+        //validación de la celda
         if (estadia.getCelda() == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "La celda es obligatoria"
             );
         }
 
+        //validación de la fecha de inicio
         if (estadia.getFechaInicio() == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "La fecha de inicio es obligatoria"
             );
         }
 
+        //validación del estado
         if (estadia.getEstado() == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "El estado de la estadia es obligatorio"
             );
         }
 
+        //validación de la tarifa
         if (estadia.getTarifa() == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "La tarifa es obligatoria para registrar la estadia"
             );
         }
 
+        // Validar que la fecha de fin no sea anterior a la fecha de inicio
         if (estadia.getFechaFin() != null && estadia.getFechaFin().isBefore(estadia.getFechaInicio())) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "La fecha de fin no puede ser anterior a la fecha de inicio"
@@ -70,40 +82,49 @@ public class EstadiaService {
     }
 
     // Obtener estadia por ID
-    public Estadia obtenerEstadiaById(UUID id) {
-        return estadiaRepositorio.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "La estadia no existe"
-                ));
+    public Estadia obtenerEstadiaById(Integer id) {
+
+        Optional<Estadia> estadiaBuscada = estadiaRepositorio.findById(id);
+        if (estadiaBuscada.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "La estadia no existe"
+            );
+        } else {
+            return estadiaBuscada.get();
+        }
     }
 
     // Eliminar estadia por ID
-    public void eliminarEstadia(UUID id) {
-        if (!estadiaRepositorio.findById(id).isPresent()) {
+    public boolean eliminarEstadia(Integer id) {
+
+        Optional<Estadia> estadiaBuscada = estadiaRepositorio.findById(id);
+        if (estadiaBuscada.isEmpty()) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "La estadia no existe"
+                    HttpStatus.BAD_REQUEST,
+                    "La estadia no existe"
             );
+        }else {
+            estadiaRepositorio.deleteById(id);
+            return true;
         }
-        estadiaRepositorio.deleteById(id);
     }
 
     // Buscar estadias por vehículo
-    public List<Estadia> obtenerEstadiasPorVehiculo(Vehiculo vehiculo) {
-        if (vehiculo == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "El vehículo no puede ser nulo"
-            );
-        }
+    public List<Estadia> obtenerEstadiasPorVehiculo(Integer id) {
+        Vehiculo vehiculo = vehiculoRepositorio.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "El vehículo no existe"
+            ));
         return estadiaRepositorio.findByVehiculo(vehiculo);
     }
 
     // Buscar estadias por celda
-    public List<Estadia> obtenerEstadiasPorCelda(Celda celda) {
-        if (celda == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "La celda no puede ser nula"
-            );
-        }
+    public List<Estadia> obtenerEstadiasPorCelda(Integer id) {
+        Celda celda = celdaRepositorio.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "La celda no existe"
+            ));
         return estadiaRepositorio.findByCelda(celda);
     }
 
@@ -159,7 +180,11 @@ public class EstadiaService {
     }
 
     // Obtener estadias activas de un vehículo
-    public List<Estadia> obtenerEstadiasActivasPorVehiculo(Vehiculo vehiculo) {
+    public List<Estadia> obtenerEstadiasActivasPorVehiculo(Integer id) {
+        Vehiculo vehiculo = vehiculoRepositorio.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "El vehículo no existe"
+            ));
         if (vehiculo == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "El vehículo no puede ser nulo"
@@ -203,23 +228,24 @@ public class EstadiaService {
     }
 
     // Actualizar estadia
-    public Estadia actualizarEstadia(UUID id, Estadia estadiaActualizada) {
-        Estadia estadia = obtenerEstadiaById(id);
+    public Estadia actualizarEstadia(Integer id, Estadia estadiaActualizada) {
+        Optional<Estadia> estadiaBuscada = estadiaRepositorio.findById(id);
+        if (estadiaBuscada.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "La estadia no existe"
+            );
 
-        if (estadiaActualizada.getFechaFin() != null) {
-            if (estadiaActualizada.getFechaFin().isBefore(estadia.getFechaInicio())) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "La fecha de fin no puede ser anterior a la fecha de inicio"
-                );
-            }
-            estadia.setFechaFin(estadiaActualizada.getFechaFin());
+        } else {
+            Estadia estadiaExistente = estadiaBuscada.get();
+            // Modificar de datos de la estadia
+            estadiaExistente.setVehiculo(estadiaActualizada.getVehiculo());
+            estadiaExistente.setCelda(estadiaActualizada.getCelda());
+            estadiaExistente.setFechaInicio(estadiaActualizada.getFechaInicio());
+            estadiaExistente.setFechaFin(estadiaActualizada.getFechaFin());
+            estadiaExistente.setEstado(estadiaActualizada.getEstado());
+            estadiaExistente.setTarifa(estadiaActualizada.getTarifa());
+            return estadiaRepositorio.save(estadiaExistente);
         }
-
-        if (estadiaActualizada.getEstado() != null) {
-            estadia.setEstado(estadiaActualizada.getEstado());
-        }
-
-        return estadiaRepositorio.save(estadia);
     }
 
     // Obtener estadias por tarifa

@@ -3,8 +3,11 @@ package com.ParkingSystem.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +26,7 @@ public class CeldaController {
     // Guardar una celda
     @PostMapping
     public ResponseEntity<?> guardarCelda(@RequestBody Celda celda) {
-        return ResponseEntity.status(HttpStatus.OK).body(
+        return ResponseEntity.status(HttpStatus.CREATED).body(
             celdaService.guardarCelda(celda)
         );
     }
@@ -41,14 +44,15 @@ public class CeldaController {
     public ResponseEntity<?> controladorModificarCelda(@PathVariable Integer id, @RequestBody Celda datosActualizados) {
         return ResponseEntity.status(HttpStatus.OK).body(
             celdaService.modificarCelda(id, datosActualizados)
-        );s
+        );
     }
 
     // controlador para eliminar una celda
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarCelda(@PathVariable Integer id) {
-        celdaService.eliminarCelda(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).body(
+            celdaService.eliminarCelda(id)
+        );
     }
 
     //Controlador para buscar por id
@@ -58,5 +62,7 @@ public class CeldaController {
             celdaService.buscarCeldaPorId(id)
         );
     }
+
+    
 
 }

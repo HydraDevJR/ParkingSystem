@@ -11,13 +11,12 @@ import com.ParkingSystem.models.Tarifa;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface IEstadiaRepository extends JpaRepository<Estadia, UUID> {
+public interface IEstadiaRepository extends JpaRepository<Estadia, Integer> {
 
     // Buscar estadia por ID
-    Optional<Estadia> findById(UUID id);
+    Optional<Estadia> findById(Integer id);
 
     // Buscar todas las estadias de un vehículo
     List<Estadia> findByVehiculo(Vehiculo vehiculo);
