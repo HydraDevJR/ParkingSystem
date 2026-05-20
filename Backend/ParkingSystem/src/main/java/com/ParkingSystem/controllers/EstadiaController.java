@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ParkingSystem.models.Estadia;
+import com.ParkingSystem.models.Usuario;
+import com.ParkingSystem.models.estadia;
 import com.ParkingSystem.services.EstadiaService;
 
 @RestController
@@ -28,42 +29,43 @@ public class EstadiaController {
 
     //Funcion controladora del servicio de guardar una estadia
     @PostMapping
-    public ResponseEntity<?> controladorGuardar(@RequestBody Estadia datos){
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-            estadiaService.guardarEstadia(datos)
+    public ResponseEntity<?> controladorGuardar(@RequestBody estadia datos){
+        return ResponseEntity.status(HttpStatus.ok).body(
+            servicio.guardarEstadia(datos)
         );
     }
 
     //Funcion controladora del servicio de listar todas las estadias
     @GetMapping
-    public ResponseEntity<?> controladorListarTodo() {
-        return ResponseEntity.status(HttpStatus.OK).body(
-            estadiaService.listarEstadias()
+    public ResponseEntity<?>controladorListarTodo(){
+        return ResponseEntity.status(HttpStatus.ok).body(
+            servicio.listarEstadias()
         );
     }
 
     //funcion controladora del servicio modificar
     @PutMapping("/{id}")
-    public ResponseEntity<?> controladorModificar(@PathVariable Integer id, @RequestBody Estadia datosActualizados){
+    public ResponseEntity<?> controladorModificar(@PathVariable Integer id, @RequestBody estadia datos){
         return ResponseEntity.status(HttpStatus.OK).body(
-            estadiaService.actualizarEstadia(id,datosActualizados)
+            servicio.modificarEstadia(id,datos)
         );
     }
-    
     //funcion controladora del servicio eliminar 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> controladorEliminar(@PathVariable Integer id){
         return ResponseEntity.status(HttpStatus.OK).body(
-            estadiaService.eliminarEstadia(id)
+            servicio.eliminarEstadia(id)
         );
     }
-    //funcion controladora del servicio buscar por id la estadia
+    //funcion controladora del servicio buscar por id
     @GetMapping("/{id}")
     public ResponseEntity<?> controladorBuscarporId(@PathVariable Integer id){
         return ResponseEntity.status(HttpStatus.OK).body(
-            estadiaService.obtenerEstadiaById(id)
+            servicio.buscarEstadiaPorId(id)
         );
     }
+
+
 
     //función controladora del servicio buscar estadia por vehiculo
     @GetMapping("/vehiculo/{id}")
