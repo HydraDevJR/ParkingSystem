@@ -12,7 +12,7 @@ import com.ParkingSystem.models.Tarifa.TipoTarifa;
 
 
 @Repository
-public interface ITarifaRepositorie extends JpaRepository<Tarifa, Integer> {
+public interface ITarifaRepository extends JpaRepository<Tarifa, Integer> {
 
     // 1. DEFINO QUE ATRIBUTOS TIENE MI MODELO Y SOLO SOBRE ESOS ATRIBUTOS PUEDO IMPLEMENTAR LAS BUSQUEDAS
 

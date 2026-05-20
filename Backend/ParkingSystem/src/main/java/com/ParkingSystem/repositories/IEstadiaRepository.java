@@ -47,4 +47,5 @@ public interface IEstadiaRepository extends JpaRepository<Estadia, Integer> {
 
     // Buscar estadias activas por tarifa
     List<Estadia> findByTarifaAndEstado(Tarifa tarifa, Estadia.EstadoEstadia estado);
+
 }

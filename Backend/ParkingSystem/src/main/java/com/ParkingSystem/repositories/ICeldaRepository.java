@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ICeldaRepositorio extends JpaRepository<Celda, Integer> {
+public interface ICeldaRepository extends JpaRepository<Celda, Integer> {
 
      Optional<Celda> findById(Integer id);
 

@@ -1,85 +1,95 @@
 package com.ParkingSystem.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.ParkingSystem.models.Estadia;
+import com.ParkingSystem.services.EstadiaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.ParkingSystem.models.Usuario;
-import com.ParkingSystem.models.estadia;
-import com.ParkingSystem.services.EstadiaService;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/parkingsystem/v1/estadias")
 public class EstadiaController {
-    
-    //Inyectar el servicio correspondiente
+
     @Autowired
     private EstadiaService estadiaService;
 
-    //para cada servicio ofrecido se debe programar una funcion
-    //esa funcion recibira las peticiones del pedido y respondera
-
-    //Funcion controladora del servicio de guardar una estadia
     @PostMapping
-    public ResponseEntity<?> controladorGuardar(@RequestBody estadia datos){
-        return ResponseEntity.status(HttpStatus.ok).body(
-            servicio.guardarEstadia(datos)
-        );
+    public ResponseEntity<?> crear(@RequestBody Estadia estadia) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(estadiaService.guardarEstadia(estadia));
     }
 
-    //Funcion controladora del servicio de listar todas las estadias
     @GetMapping
-    public ResponseEntity<?>controladorListarTodo(){
-        return ResponseEntity.status(HttpStatus.ok).body(
-            servicio.listarEstadias()
-        );
+    public ResponseEntity<?> listarTodas() {
+        return ResponseEntity.ok(estadiaService.listarEstadias());
     }
 
-    //funcion controladora del servicio modificar
-    @PutMapping("/{id}")
-    public ResponseEntity<?> controladorModificar(@PathVariable Integer id, @RequestBody estadia datos){
-        return ResponseEntity.status(HttpStatus.OK).body(
-            servicio.modificarEstadia(id,datos)
-        );
-    }
-    //funcion controladora del servicio eliminar 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> controladorEliminar(@PathVariable Integer id){
-        return ResponseEntity.status(HttpStatus.OK).body(
-            servicio.eliminarEstadia(id)
-        );
-    }
-    //funcion controladora del servicio buscar por id
     @GetMapping("/{id}")
-    public ResponseEntity<?> controladorBuscarporId(@PathVariable Integer id){
-        return ResponseEntity.status(HttpStatus.OK).body(
-            servicio.buscarEstadiaPorId(id)
-        );
+    public ResponseEntity<?> obtenerPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(estadiaService.buscarPorId(id));
     }
 
-
-
-    //función controladora del servicio buscar estadia por vehiculo
-    @GetMapping("/vehiculo/{id}")
-    public ResponseEntity<?> controladorBuscarPorVehiculo(@PathVariable Integer id){
-        return ResponseEntity.status(HttpStatus.OK).body(
-            estadiaService.obtenerEstadiasActivasPorVehiculo(id)
-        );
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable Integer id, @RequestBody Estadia estadia) {
+        return ResponseEntity.ok(estadiaService.actualizarEstadia(id, estadia));
     }
 
-    //Función controladora buscar estadia por celda
-    @GetMapping("/celda/{id}")
-    public ResponseEntity<?> controladorBuscarPorCelda(@PathVariable Integer id){
-        return ResponseEntity.status(HttpStatus.OK).body(
-            estadiaService.obtenerEstadiasPorCelda(id)
-        );
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
+        estadiaService.eliminarEstadia(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/finalizar")
+    public ResponseEntity<?> finalizar(@PathVariable Integer id) {
+        return ResponseEntity.ok(estadiaService.finalizarEstadia(id));
+    }
+
+    @GetMapping("/vehiculo/{vehiculoId}")
+    public ResponseEntity<?> buscarPorVehiculo(@PathVariable Integer vehiculoId) {
+        return ResponseEntity.ok(estadiaService.buscarPorVehiculo(vehiculoId));
+    }
+
+    @GetMapping("/celda/{celdaId}")
+    public ResponseEntity<?> buscarPorCelda(@PathVariable Integer celdaId) {
+        return ResponseEntity.ok(estadiaService.buscarPorCelda(celdaId));
+    }
+
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<?> buscarPorEstado(@PathVariable Estadia.EstadoEstadia estado) {
+        return ResponseEntity.ok(estadiaService.buscarPorEstado(estado));
+    }
+
+    @GetMapping("/activas")
+    public ResponseEntity<?> buscarActivas() {
+        return ResponseEntity.ok(estadiaService.buscarActivas());
+    }
+
+    @GetMapping("/rango-fechas")
+    public ResponseEntity<?> buscarPorRango(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime inicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fin) {
+        return ResponseEntity.ok(estadiaService.buscarPorRangoFechas(inicio, fin));
+    }
+
+    @GetMapping("/finalizadas-rango")
+    public ResponseEntity<?> buscarFinalizadasPorRango(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime inicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fin) {
+        return ResponseEntity.ok(estadiaService.buscarFinalizadasPorRango(inicio, fin));
+    }
+
+    @GetMapping("/vehiculo/{vehiculoId}/activas")
+    public ResponseEntity<?> buscarActivasPorVehiculo(@PathVariable Integer vehiculoId) {
+        return ResponseEntity.ok(estadiaService.buscarActivasPorVehiculo(vehiculoId));
+    }
+
+    @GetMapping("/tarifa/{tarifaId}")
+    public ResponseEntity<?> buscarPorTarifa(@PathVariable Integer tarifaId) {
+        return ResponseEntity.ok(estadiaService.buscarPorTarifa(tarifaId));
     }
 }
