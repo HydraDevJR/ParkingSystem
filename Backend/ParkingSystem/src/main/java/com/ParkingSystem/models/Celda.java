@@ -2,6 +2,8 @@ package com.ParkingSystem.models;
 
 import com.ParkingSystem.models.utils.EstadoCelda;
 import com.ParkingSystem.models.utils.TipoVehiculo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,6 +38,7 @@ public class Celda {
 
     // Relación OneToMany con Estadia
     @OneToMany(mappedBy = "celda" , cascade = CascadeType.ALL)
+    @JsonIgnore // Evita la serialización de las estadias para prevenir problemas de referencia circular
     private List<Estadia> estadias;
 
     public Celda() {}

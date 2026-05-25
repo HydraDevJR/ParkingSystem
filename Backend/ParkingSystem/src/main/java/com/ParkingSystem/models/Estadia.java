@@ -1,5 +1,7 @@
 package com.ParkingSystem.models;
+import com.ParkingSystem.models.utils.EstadoEstadia;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,13 +21,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "estadias")
 public class Estadia {
-    
-    public enum EstadoEstadia {
-        En_Curso,
-        Finalizada,
-        Cancelada
-    }
-    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +45,9 @@ public class Estadia {
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
 
+    @Column(name = "valor_total", precision = 10, scale = 2)
+    private BigDecimal valorTotal;
+
     @UpdateTimestamp
     @Column(name = "fecha_modificacion")
     private LocalDateTime fechaModificacion;
@@ -64,10 +62,12 @@ public class Estadia {
 
     // Constructor vacío y constructor con parámetros
     /*
-        nota: no se incluyen la fechaCreacion y ni fechaModificacion porque se manejan automaticamente 
-        con las anotaciones @CreationTimestamp y @UpdateTimestamp respectivamente
-    */
-    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin, EstadoEstadia estado, Tarifa tarifa) {
+     * nota: no se incluyen la fechaCreacion y ni fechaModificacion porque se
+     * manejan automaticamente
+     * con las anotaciones @CreationTimestamp y @UpdateTimestamp respectivamente
+     */
+    public Estadia(Vehiculo vehiculo, Celda celda, LocalDateTime fechaInicio, LocalDateTime fechaFin,
+            EstadoEstadia estado, Tarifa tarifa) {
         this.vehiculo = vehiculo;
         this.celda = celda;
         this.fechaInicio = fechaInicio;
@@ -76,7 +76,8 @@ public class Estadia {
         this.tarifa = tarifa;
     }
 
-    public Estadia() {}
+    public Estadia() {
+    }
 
     public Integer getId() {
         return id;
@@ -116,6 +117,14 @@ public class Estadia {
 
     public void setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public LocalDateTime getFechaCreacion() {

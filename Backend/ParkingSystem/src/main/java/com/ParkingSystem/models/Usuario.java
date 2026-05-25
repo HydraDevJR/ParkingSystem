@@ -14,7 +14,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.ParkingSystem.models.utils.TipoDocumento;
-import com.ParkingSystem.models.utils.TipoUsuario; 
+import com.ParkingSystem.models.utils.TipoUsuario;
+import com.fasterxml.jackson.annotation.JsonIgnore; 
 
 @Entity
 @Table(name = "usuarios")
@@ -58,6 +59,7 @@ public class Usuario {
 
     // Relación 1 a Muchos con Vehículo
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonIgnore // Evita la serialización de los vehículos para prevenir problemas de referencia circular
     private List<Vehiculo> vehiculos;
 
 

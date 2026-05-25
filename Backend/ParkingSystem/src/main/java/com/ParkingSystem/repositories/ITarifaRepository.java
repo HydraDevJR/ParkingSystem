@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.ParkingSystem.models.Tarifa;
-import com.ParkingSystem.models.Tarifa.TipoTarifa;
+import com.ParkingSystem.models.utils.TipoTarifa;
 
 
 @Repository
-public interface ITarifaRepositorie extends JpaRepository<Tarifa, Integer> {
+public interface ITarifaRepository extends JpaRepository<Tarifa, Integer> {
 
     // 1. DEFINO QUE ATRIBUTOS TIENE MI MODELO Y SOLO SOBRE ESOS ATRIBUTOS PUEDO IMPLEMENTAR LAS BUSQUEDAS
 

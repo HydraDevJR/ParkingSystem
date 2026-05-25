@@ -1,28 +1,27 @@
 package com.ParkingSystem.repositories;
 
-import org.springframework.stereotype.Repository;
 import com.ParkingSystem.models.Usuario;
-
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
 
+    // Buscar por Nombre
+    List<Usuario> findByNombre(String nombre);
 
-    //Buscar por Nombre exacto (lista)
-    List<Usuario>findByNombre(String nombre);
+    // Buscar por Documento
+    Optional<Usuario> findByDocumento(String documento);
 
-    //Buscar por documento (1)
-    Optional<Usuario>findByDocumento(String documento);
+    //Buscar por Nombre que contenga
+    List<Usuario> findByNombreContaining(String nombre);
 
-    //Buscar por nombres que contengan nnn (lista)
-    List<Usuario>findByNombreContaining(String nombre);
-
-    // Buscar por fecha de nacimiento (lista)
+    //Buscar por Fecha de Nacimiento
     List<Usuario> findByFechaNacimiento(LocalDate fechaNacimiento);
 
+    //Buscar por Email
+    Optional<Usuario> findByEmail(String email);
 }

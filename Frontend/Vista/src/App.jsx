@@ -6,16 +6,7 @@ import Terminos from './pages/Terminos.jsx';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/contacto" element={<Contacto />} />
-        <Route path="/ayuda" element={<Ayuda />} />
-        <Route path="/terminos" element={<Terminos />} />
-      </Routes>
-
-      <Footer />
-    </BrowserRouter>
+    <RouterProvider router={router} />
   );
 }
 

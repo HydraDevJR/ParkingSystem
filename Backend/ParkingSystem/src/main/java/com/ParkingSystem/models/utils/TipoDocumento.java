@@ -1,9 +1,9 @@
 package com.ParkingSystem.models.utils;
 
 public enum TipoDocumento {
-    CedulaCiudadania,
-    CedulaExtranjeria,
-    Pasaporte,
-    TarjetaIdetidad,
-    RegistroCivil
+    CEDULA_CIUDADANIA,
+    CEDULA_EXTRANJERIA,
+    PASAPORTE,
+    TARJETA_IDENTIDAD,
+    REGISTRO_CIVIL
 }

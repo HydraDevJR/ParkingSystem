@@ -10,106 +10,100 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ParkingSystem.models.Tarifa;
-import com.ParkingSystem.repositories.ITarifaRepositorie;
+import com.ParkingSystem.models.utils.TipoTarifa;
+import com.ParkingSystem.repositories.ITarifaRepository;
 
 @Service
 public class TarifaServicie {
 
-    // Inyectando la dependencia al repositorio Tarifa
     @Autowired
-    private ITarifaRepositorie repositorio;
+    private ITarifaRepository repositorio;
 
-    // Se programa una funcion por cada servicio que voy a ofrecer
-
-
-    // funcion para guardar una tarifa
-    public Tarifa guardar_tarifa(Tarifa datosTarifa){
-
-        // validar que el tipo de tarifa no sea nulo
-        if(datosTarifa.getTipo() == null){
-            throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "Apreciado usuario, el tipo de tarifa es obligatorio"
-            );
+    // Guardar tarifa
+    public Tarifa guardar_tarifa(Tarifa datosTarifa) {
+        validarTarifa(datosTarifa);
+        
+        // Opcional: evitar duplicados de tipo (si solo debe haber una tarifa por tipo)
+        if (repositorio.findByTipo(datosTarifa.getTipo()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Ya existe una tarifa con el tipo: " + datosTarifa.getTipo());
         }
-
-        // validar que el valor sea mayor a cero
-        if(datosTarifa.getValor() == null || datosTarifa.getValor().compareTo(BigDecimal.ZERO) <= 0){
-            throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "Apreciado usuario, el valor de la tarifa debe ser mayor a cero"
-            );
-        }
-
-        // Si paso todas las validaciones
-        // intentare activar el guardado de los datos
+        
         return repositorio.save(datosTarifa);
-
     }
 
-
-    // funcion para listar todas las tarifas
-    public List<Tarifa> listar_tarifas(){
+    // Listar todas
+    public List<Tarifa> listar_tarifas() {
         return repositorio.findAll();
     }
 
-
-    // funcion para modificar una tarifa
-    public Tarifa modificar_tarifa(Integer id, Tarifa datosNuevos){
-
-        Optional<Tarifa> tarifa_que_busco = repositorio.findById(id);
-        if(tarifa_que_busco.isEmpty()){
-            throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "Tarifa no encontrada"
-            );
-
-        }else{
-
-            Tarifa tarifa_encontrada = tarifa_que_busco.get();
-            // modifiquemos datos
-            tarifa_encontrada.setTipo(datosNuevos.getTipo());
-            tarifa_encontrada.setValor(datosNuevos.getValor());
-            tarifa_encontrada.setActivo(datosNuevos.getActivo());
-            return repositorio.save(tarifa_encontrada);
-
+    // Modificar tarifa
+    public Tarifa modificar_tarifa(Integer id, Tarifa datosNuevos) {
+        Tarifa tarifaExistente = buscar_tarifa_por_id(id); // ya lanza 404 si no existe
+        
+        // Validar los nuevos datos
+        if (datosNuevos.getTipo() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El tipo de tarifa es obligatorio");
         }
-
+        if (datosNuevos.getValor() == null || datosNuevos.getValor().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El valor debe ser mayor a cero");
+        }
+        
+        // Si cambia el tipo, validar que no exista ya otra tarifa con ese tipo
+        if (!tarifaExistente.getTipo().equals(datosNuevos.getTipo()) &&
+            repositorio.findByTipo(datosNuevos.getTipo()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Ya existe otra tarifa con el tipo: " + datosNuevos.getTipo());
+        }
+        
+        tarifaExistente.setTipo(datosNuevos.getTipo());
+        tarifaExistente.setValor(datosNuevos.getValor());
+        tarifaExistente.setActivo(datosNuevos.getActivo());
+        return repositorio.save(tarifaExistente);
     }
 
-
-    // funcion para eliminar una tarifa
-    public boolean eliminar_tarifa(Integer id){
-
-        Optional<Tarifa> tarifa_que_busco = repositorio.findById(id);
-        if(tarifa_que_busco.isEmpty()){
-            throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "Tarifa no encontrada"
-            );
-
-        }else{
-            repositorio.deleteById(id);
-            return true;
-        }
-
+    // Eliminar tarifa
+    public boolean eliminar_tarifa(Integer id) {
+        Tarifa tarifa = buscar_tarifa_por_id(id); // si no existe, lanza 404
+        repositorio.delete(tarifa);
+        return true;
     }
 
-
-    // funcion para buscar una tarifa por id
-    public Tarifa buscar_tarifa_por_id(Integer id){
-
-        Optional<Tarifa> tarifa_que_busco = repositorio.findById(id);
-        if(tarifa_que_busco.isEmpty()){
-            throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "Tarifa no encontrada"
-            );
-
-        }else{
-            return tarifa_que_busco.get();
-        }
-
+    // Buscar por id
+    public Tarifa buscar_tarifa_por_id(Integer id) {
+        return repositorio.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Tarifa no encontrada con id: " + id));
     }
 
+    // ========== Métodos adicionales para usar el repositorio ==========
+    public List<Tarifa> tarifas_activas() {
+        return repositorio.findByActivoTrue();
+    }
+
+    public Optional<Tarifa> buscar_por_tipo(TipoTarifa tipo) {
+        return repositorio.findByTipo(tipo);
+    }
+
+    public Optional<Tarifa> buscar_por_tipo_activo(TipoTarifa tipo) {
+        return repositorio.findByTipoAndActivoTrue(tipo);
+    }
+
+    public List<Tarifa> buscar_por_valor_menor_o_igual(BigDecimal valorMaximo) {
+        return repositorio.findByValorLessThanEqual(valorMaximo);
+    }
+
+    // Método auxiliar de validación (DRY)
+    private void validarTarifa(Tarifa tarifa) {
+        if (tarifa.getTipo() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El tipo de tarifa es obligatorio");
+        }
+        if (tarifa.getValor() == null || tarifa.getValor().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El valor de la tarifa debe ser mayor a cero");
+        }
+        // activo puede ser null? si es null, se puede establecer por defecto true
+        if (tarifa.getActivo() == null) {
+            tarifa.setActivo(true);
+        }
+    }
 }
