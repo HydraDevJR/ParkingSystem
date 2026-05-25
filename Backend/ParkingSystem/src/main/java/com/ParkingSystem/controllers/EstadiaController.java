@@ -1,5 +1,6 @@
 package com.ParkingSystem.controllers;
 
+import com.ParkingSystem.models.utils.EstadoEstadia;
 import com.ParkingSystem.models.Estadia;
 import com.ParkingSystem.services.EstadiaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class EstadiaController {
     }
 
     @GetMapping("/estado/{estado}")
-    public ResponseEntity<?> buscarPorEstado(@PathVariable Estadia.EstadoEstadia estado) {
+    public ResponseEntity<?> buscarPorEstado(@PathVariable EstadoEstadia estado) {
         return ResponseEntity.ok(estadiaService.buscarPorEstado(estado));
     }
 

@@ -1,5 +1,8 @@
 package com.ParkingSystem.models;
 
+import com.ParkingSystem.models.utils.TipoTarifa;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -19,12 +22,6 @@ import jakarta.persistence.Table;
 @Table(name = "tarifas")
 public class Tarifa {
 
-    public enum TipoTarifa {
-        POR_HORA,
-        POR_DIA,
-        POR_MES
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -40,6 +37,7 @@ public class Tarifa {
     private Boolean activo;
 
     @OneToMany(mappedBy = "tarifa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore // Evita la serialización de las estadias para prevenir problemas de referencia circular
     private List<Estadia> estadias;
 
     public Tarifa() {}

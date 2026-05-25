@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ParkingSystem.models.Tarifa;
-import com.ParkingSystem.models.Tarifa.TipoTarifa;
+import com.ParkingSystem.models.utils.TipoTarifa;
 import com.ParkingSystem.services.TarifaServicie;
 
 @RestController

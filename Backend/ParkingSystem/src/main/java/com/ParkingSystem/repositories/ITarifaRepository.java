@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.ParkingSystem.models.Tarifa;
-import com.ParkingSystem.models.Tarifa.TipoTarifa;
+import com.ParkingSystem.models.utils.TipoTarifa;
 
 
 @Repository

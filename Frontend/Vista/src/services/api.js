@@ -1,7 +1,27 @@
-const URL_BASE = "https://parking-json-server.onrender.com"; 
+const URL_BASE = "http://localhost:8080/parkingsystem/v1";
+
+export const request = async (endpoint, method = 'GET', body = null) => {
+  const url = `${URL_BASE}${endpoint}`;
+  const options = {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+  };
+  if (body) options.body = JSON.stringify(body);
+
+  const response = await fetch(url, options);
+  
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.message || `Error en la petición: ${response.status}`);
+  }
+  
+  if (response.status === 204) return true;
+  
+  return response.json();
+};
 
 export const urlAPI = {
-  users: `${URL_BASE}/usuarios`,
+  usuarios: `${URL_BASE}/usuarios`,
   vehiculos: `${URL_BASE}/vehiculos`,
   celdas: `${URL_BASE}/celdas`,
   tarifas: `${URL_BASE}/tarifas`,

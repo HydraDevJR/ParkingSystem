@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ParkingSystem.models.Tarifa;
-import com.ParkingSystem.models.Tarifa.TipoTarifa;
+import com.ParkingSystem.models.utils.TipoTarifa;
 import com.ParkingSystem.repositories.ITarifaRepository;
 
 @Service

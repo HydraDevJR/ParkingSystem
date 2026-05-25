@@ -7,6 +7,7 @@ import com.ParkingSystem.models.Estadia;
 import com.ParkingSystem.models.Vehiculo;
 import com.ParkingSystem.models.Celda;
 import com.ParkingSystem.models.Tarifa;
+import com.ParkingSystem.models.utils.EstadoEstadia;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,27 +26,27 @@ public interface IEstadiaRepository extends JpaRepository<Estadia, Integer> {
     List<Estadia> findByCelda(Celda celda);
 
     // Buscar estadias por estado
-    List<Estadia> findByEstado(Estadia.EstadoEstadia estado);
+    List<Estadia> findByEstado(EstadoEstadia estado);
 
     // Buscar estadias activas (En_Curso)
-    List<Estadia> findByEstadoOrderByFechaInicio(Estadia.EstadoEstadia estado);
+    List<Estadia> findByEstadoOrderByFechaInicio(EstadoEstadia estado);
 
     // Buscar estadias por rango de fechas
     List<Estadia> findByFechaInicioBetween(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
     // Buscar estadias finalizadas por rango de fechas
-    List<Estadia> findByEstadoAndFechaFinBetween(Estadia.EstadoEstadia estado, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    List<Estadia> findByEstadoAndFechaFinBetween(EstadoEstadia estado, LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
     // Buscar por vehículo y estado
-    List<Estadia> findByVehiculoAndEstado(Vehiculo vehiculo, Estadia.EstadoEstadia estado);
+    List<Estadia> findByVehiculoAndEstado(Vehiculo vehiculo, EstadoEstadia estado);
 
     // Buscar por celda y estado
-    List<Estadia> findByCeldaAndEstado(Celda celda, Estadia.EstadoEstadia estado);
+    List<Estadia> findByCeldaAndEstado(Celda celda, EstadoEstadia estado);
 
     // Buscar estadias por tarifa
     List<Estadia> findByTarifa(Tarifa tarifa);
 
     // Buscar estadias activas por tarifa
-    List<Estadia> findByTarifaAndEstado(Tarifa tarifa, Estadia.EstadoEstadia estado);
+    List<Estadia> findByTarifaAndEstado(Tarifa tarifa, EstadoEstadia estado);
 
 }

@@ -48,7 +48,7 @@ const Header = ({ onMenuClick }) => {
         <div>
           {user ? (
             <span className="text-slate-700 font-medium">
-              Hola, {user.nombres || user.email || 'Usuario'}
+              Hola, {user.nombre || 'Usuario'}
             </span>
           ) : (
             <Link

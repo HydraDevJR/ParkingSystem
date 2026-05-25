@@ -1,4 +1,5 @@
 package com.ParkingSystem.models;
+import com.ParkingSystem.models.utils.EstadoEstadia;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,12 +21,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "estadias")
 public class Estadia {
-
-    public enum EstadoEstadia {
-        En_Curso,
-        Finalizada,
-        Cancelada
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

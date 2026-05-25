@@ -1,7 +1,7 @@
 package com.ParkingSystem.services;
 
 import com.ParkingSystem.models.*;
-import com.ParkingSystem.models.utils.EstadoCelda;
+import com.ParkingSystem.models.utils.*;
 import com.ParkingSystem.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,9 +33,13 @@ public class EstadiaService {
     public Estadia guardarEstadia(Estadia estadia) {
         validarEstadia(estadia);
 
+        Celda celda = celdaRepository.findById(estadia.getCelda().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "La celda no existe"));
+        estadia.setCelda(celda);
+
         // Validar que la celda esté disponible si la estadia inicia ahora
-        if (estadia.getEstado() == Estadia.EstadoEstadia.En_Curso) {
-            Celda celda = estadia.getCelda();
+        if (estadia.getEstado() == EstadoEstadia.EN_CURSO) {
+
             if (celda.getEstado() != EstadoCelda.DISPONIBLE) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,
                         "La celda " + celda.getCodigo() + " no está disponible");
@@ -66,19 +70,19 @@ public class EstadiaService {
         // curso)
         if (datosNuevos.getCelda() != null && !existente.getCelda().equals(datosNuevos.getCelda())) {
             Celda nuevaCelda = datosNuevos.getCelda();
-            if (existente.getEstado() == Estadia.EstadoEstadia.En_Curso &&
+            if (existente.getEstado() == EstadoEstadia.EN_CURSO &&
                     nuevaCelda.getEstado() == EstadoCelda.OCUPADA) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,
                         "La nueva celda ya está ocupada");
             }
             // Liberar celda anterior
             Celda viejaCelda = existente.getCelda();
-            if (existente.getEstado() == Estadia.EstadoEstadia.En_Curso) {
+            if (existente.getEstado() == EstadoEstadia.EN_CURSO) {
                 viejaCelda.setEstado(EstadoCelda.DISPONIBLE);
                 celdaRepository.save(viejaCelda);
             }
             // Marcar nueva celda como ocupada
-            if (existente.getEstado() == Estadia.EstadoEstadia.En_Curso) {
+            if (existente.getEstado() == EstadoEstadia.EN_CURSO) {
                 nuevaCelda.setEstado(EstadoCelda.OCUPADA);
                 celdaRepository.save(nuevaCelda);
             }
@@ -92,8 +96,8 @@ public class EstadiaService {
         existente.setTarifa(datosNuevos.getTarifa());
 
         // Si se está finalizando la estadia, calcular valor y liberar celda
-        if (datosNuevos.getEstado() == Estadia.EstadoEstadia.Finalizada &&
-                existente.getEstado() != Estadia.EstadoEstadia.Finalizada) {
+        if (datosNuevos.getEstado() == EstadoEstadia.FINALIZADA &&
+                existente.getEstado() != EstadoEstadia.FINALIZADA) {
             calcularYAsignarValorTotal(existente);
             liberarCelda(existente.getCelda());
         }
@@ -105,7 +109,7 @@ public class EstadiaService {
     public void eliminarEstadia(Integer id) {
         Estadia estadia = buscarPorId(id);
         // Si está en curso, liberar la celda antes de eliminar
-        if (estadia.getEstado() == Estadia.EstadoEstadia.En_Curso) {
+        if (estadia.getEstado() == EstadoEstadia.EN_CURSO) {
             liberarCelda(estadia.getCelda());
         }
         estadiaRepository.delete(estadia);
@@ -119,12 +123,12 @@ public class EstadiaService {
     @Transactional
     public Estadia finalizarEstadia(Integer id) {
         Estadia estadia = buscarPorId(id);
-        if (estadia.getEstado() != Estadia.EstadoEstadia.En_Curso) {
+        if (estadia.getEstado() != EstadoEstadia.EN_CURSO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Solo se pueden finalizar estadías en curso");
         }
         estadia.setFechaFin(LocalDateTime.now());
-        estadia.setEstado(Estadia.EstadoEstadia.Finalizada);
+        estadia.setEstado(EstadoEstadia.FINALIZADA);
         calcularYAsignarValorTotal(estadia);
         liberarCelda(estadia.getCelda());
         return estadiaRepository.save(estadia);
@@ -183,12 +187,12 @@ public class EstadiaService {
         return estadiaRepository.findByCelda(celda);
     }
 
-    public List<Estadia> buscarPorEstado(Estadia.EstadoEstadia estado) {
+    public List<Estadia> buscarPorEstado(EstadoEstadia estado) {
         return estadiaRepository.findByEstado(estado);
     }
 
     public List<Estadia> buscarActivas() {
-        return estadiaRepository.findByEstadoOrderByFechaInicio(Estadia.EstadoEstadia.En_Curso);
+        return estadiaRepository.findByEstadoOrderByFechaInicio(EstadoEstadia.EN_CURSO);
     }
 
     public List<Estadia> buscarPorRangoFechas(LocalDateTime inicio, LocalDateTime fin) {
@@ -204,13 +208,13 @@ public class EstadiaService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Las fechas son obligatorias");
         if (fin.isBefore(inicio))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha fin no puede ser anterior a la inicio");
-        return estadiaRepository.findByEstadoAndFechaFinBetween(Estadia.EstadoEstadia.Finalizada, inicio, fin);
+        return estadiaRepository.findByEstadoAndFechaFinBetween(EstadoEstadia.FINALIZADA, inicio, fin);
     }
 
     public List<Estadia> buscarActivasPorVehiculo(Integer vehiculoId) {
         Vehiculo vehiculo = vehiculoRepository.findById(vehiculoId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehículo no encontrado"));
-        return estadiaRepository.findByVehiculoAndEstado(vehiculo, Estadia.EstadoEstadia.En_Curso);
+        return estadiaRepository.findByVehiculoAndEstado(vehiculo, EstadoEstadia.EN_CURSO);
     }
 
     public List<Estadia> buscarPorTarifa(Integer tarifaId) {

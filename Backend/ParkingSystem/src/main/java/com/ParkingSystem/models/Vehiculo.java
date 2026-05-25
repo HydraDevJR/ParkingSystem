@@ -3,6 +3,7 @@ package com.ParkingSystem.models;
 import java.util.List;
 
 import com.ParkingSystem.models.utils.TipoVehiculo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -48,6 +49,7 @@ public class Vehiculo {
 
     // Relación Uno a Muchos con Estadia
     @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL)
+    @JsonIgnore // Evita la serialización de las estadias para prevenir problemas de referencia circular
     private List<Estadia> estancias;
 
     
