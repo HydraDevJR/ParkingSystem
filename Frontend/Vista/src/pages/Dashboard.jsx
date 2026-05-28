@@ -4,6 +4,7 @@ import { getLocalStorage } from "../helpers/local-storage";
 import { urlAPI } from "../services/api";
 import { formatCurrency, formatDateTime } from "../utils/formatters";
 import { showHttpErrorAlert } from "../helpers/alerts";
+import GraficosView from "../pages/analiticas/GraficosView";
 
 const Dashboard = () => {
     const [user, setUser] = useState(null);
@@ -17,6 +18,12 @@ const Dashboard = () => {
     const [ingresosMes, setIngresosMes] = useState(0);
     const [estadiasRecientes, setEstadiasRecientes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    // Función para actualizar gráficos
+    const handleRefreshGraficos = () => {
+        setRefreshKey(prev => prev + 1);
+    };
 
     useEffect(() => {
         const storedUser = getLocalStorage("user");
@@ -167,6 +174,22 @@ const Dashboard = () => {
                     </div>
                     <p className="mt-2 text-xs text-slate-500">Proyección vs mes anterior</p>
                 </div>
+            </section>
+
+            <section className="mt-6">
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-slate-900 text-xl font-bold">Análisis de ingresos</h2>
+                    <button
+                        onClick={handleRefreshGraficos}
+                        className="inline-flex items-center gap-1 text-sm text-[#3498DB] hover:underline"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Actualizar
+                    </button>
+                </div>
+                <GraficosView refreshKey={refreshKey} />
             </section>
 
             {/* Tabla de últimas estadías y acciones rápidas */}

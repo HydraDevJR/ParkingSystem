@@ -1,4 +1,5 @@
 const URL_BASE = "http://localhost:8080/parkingsystem/v1";
+const ANALYTICS_BASE = "http://localhost:8080"; // porque el controlador de analytics está en la raíz
 
 export const request = async (endpoint, method = 'GET', body = null) => {
   const url = `${URL_BASE}${endpoint}`;
@@ -27,3 +28,6 @@ export const urlAPI = {
   tarifas: `${URL_BASE}/tarifas`,
   estadias: `${URL_BASE}/estadias`,
 };
+
+// Exportamos la base para endpoints de analítica
+export const analyticsBase = ANALYTICS_BASE;

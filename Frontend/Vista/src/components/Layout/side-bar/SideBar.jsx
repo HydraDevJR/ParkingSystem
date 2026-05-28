@@ -9,6 +9,7 @@ const SideBar = ({ isOpen, onClose }) => {
     { name: 'Estadías', path: '/estadias',},
     { name: 'Tarifas', path: '/tarifas'},
     { name: 'Celdas', path: '/celdas'},
+    { name: 'Analiticas', path: '/analiticas'},
   ];
 
   return (

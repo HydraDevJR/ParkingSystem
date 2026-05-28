@@ -39,7 +39,7 @@ const Header = ({ onMenuClick }) => {
             <span className="w-6 h-0.5 bg-[#0A2647] rounded" />
             <span className="w-6 h-0.5 bg-[#0A2647] rounded" />
           </button>
-          <Link to="/" className="text-2xl font-bold text-[#0A2647]">
+          <Link to="/dashboard" className="text-2xl font-bold text-[#0A2647]">
             Parking System
           </Link>
         </div>
