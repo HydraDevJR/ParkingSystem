@@ -6,6 +6,7 @@ import TarifasPage from '../pages/tarifas/TarifasPage'
 import CeldasPage from '../pages/celdas/CeldasPage'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
+import AnaliticaPage from '../pages/analiticas/AnaliticaPage'
 import Layout from '../components/layout/Layout'
 
 
@@ -58,6 +59,13 @@ export let router = [
         element: <Layout />,
         children: [
             { index: true, element: <CeldasPage /> },
+        ]
+    },
+    {
+        path: "/analiticas",
+        element: <Layout />,
+        children: [
+            { index: true, element: <AnaliticaPage /> },
         ]
     }
 
